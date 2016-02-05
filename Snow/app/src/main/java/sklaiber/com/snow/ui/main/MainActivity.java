@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -68,5 +69,7 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void setItems(ArrayList<Repository> items) {
         Timber.d(items.get(0).getName());
+        TextView txt = (TextView) findViewById(R.id.txt);
+        txt.setText(items.get(0).getName());
     }
 }
