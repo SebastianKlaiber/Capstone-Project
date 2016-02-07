@@ -1,8 +1,6 @@
 package sklaiber.com.snow.ui.main;
 
-import java.util.ArrayList;
-
-import sklaiber.com.snow.models.Repository;
+import sklaiber.com.snow.models.Items;
 
 /**
  * Created by skipj on 12.01.2016.
@@ -11,5 +9,5 @@ public interface MainView {
 
     public void showProgress();
     public void hideProgress();
-    public  void setItems(ArrayList<Repository> items);
+    public  void setItems(Items items);
 }

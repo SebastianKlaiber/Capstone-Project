@@ -1,8 +1,6 @@
 package sklaiber.com.snow.ui.main;
 
-import java.util.ArrayList;
-
-import sklaiber.com.snow.models.Repository;
+import sklaiber.com.snow.models.Items;
 import sklaiber.com.snow.network.interactors.FindItemsInteractor;
 
 /**
@@ -23,7 +21,7 @@ public class MainPresenterImpl implements MainPresenter, OnFinishedListener {
         findItemsInteractor.findItems(this);
     }
 
-    @Override public void onFinished(ArrayList<Repository> items) {
+    @Override public void onFinished(Items items) {
         mainView.hideProgress();
         mainView.setItems(items);
     }

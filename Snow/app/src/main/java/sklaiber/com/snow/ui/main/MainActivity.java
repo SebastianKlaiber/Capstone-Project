@@ -7,15 +7,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import sklaiber.com.snow.R;
 import sklaiber.com.snow.di.components.AppComponent;
 import sklaiber.com.snow.di.components.DaggerMainComponent;
 import sklaiber.com.snow.di.modules.MainModule;
-import sklaiber.com.snow.models.Repository;
+import sklaiber.com.snow.models.Items;
 import sklaiber.com.snow.ui.common.BaseActivity;
 import timber.log.Timber;
 
@@ -67,9 +65,10 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public void setItems(ArrayList<Repository> items) {
-        Timber.d(items.get(0).getName());
+    public void setItems(Items items) {
+        Timber.d(items.getItems().get(0).getName());
         TextView txt = (TextView) findViewById(R.id.txt);
-        txt.setText(items.get(0).getName());
+        txt.setText(items.getItems().get(0).getName() + " "
+                + items.getItems().get(0).getConditions());
     }
 }

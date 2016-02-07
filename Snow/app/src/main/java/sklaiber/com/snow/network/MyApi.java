@@ -1,15 +1,17 @@
 package sklaiber.com.snow.network;
 
-import java.util.ArrayList;
-
 import retrofit.Call;
 import retrofit.http.GET;
-import sklaiber.com.snow.models.Repository;
+import sklaiber.com.snow.models.Items;
+import sklaiber.com.snow.models.Resort;
 
 /**
  * Created by skipj on 11.01.2016.
  */
 public interface MyApi {
-    @GET("/users/SebastianKlaiber/repos")
-    Call<ArrayList<Repository>> getRepository();
+//    @GET("/_ah/api/myApi/v1/resortbean")
+//    Call<ArrayList<Resort>> getRepository();
+
+    @GET("/_ah/api/myApi/v1/resortbean")
+    Call<Items> getResort();
 }
