@@ -2,11 +2,10 @@ package sklaiber.com.snow;
 
 import android.app.Application;
 import android.content.Context;
-
 import com.facebook.stetho.Stetho;
-
 import sklaiber.com.snow.di.components.AppComponent;
 import sklaiber.com.snow.di.components.DaggerAppComponent;
+import sklaiber.com.snow.di.components.MainComponent;
 import sklaiber.com.snow.di.modules.AppModule;
 import timber.log.Timber;
 
@@ -15,41 +14,33 @@ import timber.log.Timber;
  */
 public class SnowApplication extends Application {
 
-    private AppComponent mAppComponent;
+  private AppComponent appComponent;
+  private MainComponent mainComponent;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+  @Override public void onCreate() {
+    super.onCreate();
 
-        if (BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree() {
-                @Override
-                protected String createStackElementTag(StackTraceElement element) {
-                    return super.createStackElementTag(element) + ':' + element.getLineNumber();
-                }
-            });
+    if (BuildConfig.DEBUG) {
+      Timber.plant(new Timber.DebugTree() {
+        @Override protected String createStackElementTag(StackTraceElement element) {
+          return super.createStackElementTag(element) + ':' + element.getLineNumber();
         }
-
-        mAppComponent = createComponent();
-
-        Stetho.initialize(
-            Stetho.newInitializerBuilder(this)
-                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
-                .build());
+      });
     }
 
-    public AppComponent createComponent() {
-        return DaggerAppComponent.builder()
-                    .appModule(new AppModule(this))
-                    .build();
-    }
+    //appComponent = createAppComponent();
 
-    public AppComponent component() {
-        return mAppComponent;
-    }
+    Stetho.initialize(Stetho.newInitializerBuilder(this)
+        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+        .build());
+  }
 
-    public static SnowApplication get(Context context) {
-        return (SnowApplication) context.getApplicationContext();
-    }
+  public AppComponent createAppComponent() {
+    return DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+  }
+
+  public static SnowApplication get(Context context) {
+      return (SnowApplication) context.getApplicationContext();
+  }
 }

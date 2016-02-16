@@ -13,13 +13,10 @@ import sklaiber.com.snow.di.modules.InteractorsModule;
 
 @Singleton
 @Component(
-        modules = {
-                AppModule.class,
-                InteractorsModule.class
-        }
-)
-public interface AppComponent {
-    void inject(SnowApplication target);
+    modules = {
+        AppModule.class, InteractorsModule.class
+    }) public interface AppComponent {
+  void inject(SnowApplication target);
 
-    Retrofit retrofit();
+  Retrofit retrofit();
 }
