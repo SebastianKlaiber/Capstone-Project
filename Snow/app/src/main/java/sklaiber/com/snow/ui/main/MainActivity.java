@@ -1,10 +1,7 @@
 package sklaiber.com.snow.ui.main;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -28,15 +25,6 @@ public class MainActivity extends BaseActivity implements MainView {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
@@ -66,9 +54,8 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void setItems(Items items) {
-        Timber.d(items.getItems().get(0).getName());
+        Timber.d("MainActivity");
         TextView txt = (TextView) findViewById(R.id.txt);
-        txt.setText(items.getItems().get(0).getName() + " "
-                + items.getItems().get(0).getConditions());
+        txt.setText(items.getItems().get(0).getName());
     }
 }

@@ -3,7 +3,7 @@ package sklaiber.com.snow.ui.common;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import sklaiber.com.snow.App;
+import sklaiber.com.snow.SnowApplication;
 import sklaiber.com.snow.di.components.AppComponent;
 
 /**
@@ -14,7 +14,7 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupComponent((AppComponent) App.get(this).component());
+        setupComponent((AppComponent) SnowApplication.get(this).component());
     }
 
     protected abstract void setupComponent(AppComponent appComponent);

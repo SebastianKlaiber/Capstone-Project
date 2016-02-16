@@ -13,7 +13,7 @@ import timber.log.Timber;
 /**
  * Created by skipj on 11.01.2016.
  */
-public class App extends Application {
+public class SnowApplication extends Application {
 
     private AppComponent mAppComponent;
 
@@ -30,23 +30,26 @@ public class App extends Application {
             });
         }
 
-        setupGraph();
+        mAppComponent = createComponent();
 
-        Stetho.initializeWithDefaults(this);
+        Stetho.initialize(
+            Stetho.newInitializerBuilder(this)
+                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                .build());
     }
 
-    private void setupGraph() {
-        mAppComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
-                .build();
-        mAppComponent.inject(this);
+    public AppComponent createComponent() {
+        return DaggerAppComponent.builder()
+                    .appModule(new AppModule(this))
+                    .build();
     }
 
     public AppComponent component() {
         return mAppComponent;
     }
 
-    public static App get(Context context) {
-        return (App) context.getApplicationContext();
+    public static SnowApplication get(Context context) {
+        return (SnowApplication) context.getApplicationContext();
     }
 }

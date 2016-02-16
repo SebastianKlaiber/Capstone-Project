@@ -1,7 +1,5 @@
 package sklaiber.com.snow.models;
 
-import java.util.ArrayList;
-
 /**
  * Created by skipj on 11.01.2016.
  */

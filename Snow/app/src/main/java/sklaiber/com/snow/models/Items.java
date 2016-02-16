@@ -13,4 +13,8 @@ public class Items {
         return items;
     }
 
+
+    public void setItems(ArrayList<Resort> items) {
+        this.items = items;
+    }
 }

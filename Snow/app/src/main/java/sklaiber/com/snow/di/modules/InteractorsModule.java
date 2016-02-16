@@ -1,22 +1,16 @@
 package sklaiber.com.snow.di.modules;
 
 import android.app.Application;
-
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
-
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Singleton;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
-import sklaiber.com.snow.network.MyApi;
-import sklaiber.com.snow.network.interactors.FindItemsInteractorImpl;
-import sklaiber.com.snow.network.interactors.FindItemsInteractor;
 import sklaiber.com.snow.utils.Constants;
 
 /**
@@ -24,16 +18,6 @@ import sklaiber.com.snow.utils.Constants;
  */
 @Module
 public class InteractorsModule {
-
-    @Provides
-    public FindItemsInteractor provideFindItemsInteractor(MyApi myApi) {
-        return new FindItemsInteractorImpl(myApi);
-    }
-
-    @Provides
-    public MyApi provideMyApi(Retrofit retrofit) {
-        return retrofit.create(MyApi.class);
-    }
 
     @Provides
     @Singleton
@@ -52,8 +36,7 @@ public class InteractorsModule {
     }
 
     @Provides
-    @Singleton
-    OkHttpClient provideOkHttpClient(Cache cache) {
+    @Singleton OkHttpClient provideOkHttpClient(Cache cache) {
         OkHttpClient client = new OkHttpClient();
         client.setCache(cache);
         return client;
@@ -62,11 +45,10 @@ public class InteractorsModule {
     @Provides
     @Singleton
     Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
-        Retrofit retrofit = new Retrofit.Builder()
+        return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(Constants.BASE_URL)
                 .client(okHttpClient)
                 .build();
-        return retrofit;
     }
 }

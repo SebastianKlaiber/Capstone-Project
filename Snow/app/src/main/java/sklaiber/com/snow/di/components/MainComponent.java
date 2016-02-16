@@ -4,7 +4,6 @@ import dagger.Component;
 import sklaiber.com.snow.di.modules.MainModule;
 import sklaiber.com.snow.di.scopes.ActivityScope;
 import sklaiber.com.snow.ui.main.MainActivity;
-import sklaiber.com.snow.ui.main.MainPresenter;
 
 /**
  * Created by skipj on 11.01.2016.
@@ -14,6 +13,5 @@ import sklaiber.com.snow.ui.main.MainPresenter;
         dependencies = AppComponent.class,
         modules = MainModule.class)
 public interface MainComponent {
-    void inject(MainActivity activity);
-    MainPresenter getMainPresenter();
+    void inject(MainActivity target);
 }

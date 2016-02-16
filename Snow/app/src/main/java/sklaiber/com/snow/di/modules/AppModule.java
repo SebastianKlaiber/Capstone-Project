@@ -1,11 +1,9 @@
 package sklaiber.com.snow.di.modules;
 
 import android.app.Application;
-
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Singleton;
 
 /**
  * Created by skipj on 11.01.2016.
@@ -24,4 +22,5 @@ public class AppModule {
     Application providesApplication() {
         return mApplication;
     }
+
 }
