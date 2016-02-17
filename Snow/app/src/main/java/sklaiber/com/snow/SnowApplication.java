@@ -28,7 +28,7 @@ public class SnowApplication extends Application {
       });
     }
 
-    //appComponent = createAppComponent();
+    appComponent = createAppComponent();
 
     Stetho.initialize(Stetho.newInitializerBuilder(this)
         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))

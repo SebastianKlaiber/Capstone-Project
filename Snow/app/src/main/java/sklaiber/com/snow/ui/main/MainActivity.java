@@ -8,6 +8,7 @@ import sklaiber.com.snow.di.components.AppComponent;
 import sklaiber.com.snow.di.components.DaggerMainComponent;
 import sklaiber.com.snow.di.modules.MainModule;
 import sklaiber.com.snow.models.Items;
+import sklaiber.com.snow.sync.SyncAdapter;
 import sklaiber.com.snow.ui.common.BaseActivity;
 import timber.log.Timber;
 
@@ -21,11 +22,14 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     setContentView(R.layout.activity_main);
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
+    SyncAdapter.initializeSyncAdapter(this);
+
   }
 
   @Override protected void onResume() {
     super.onResume();
-    mMainPresenter.loadResorts();
+    SyncAdapter.syncImmediately(this);
+    //mMainPresenter.loadResorts();
   }
 
   @Override protected void setupComponent(AppComponent appComponent) {
