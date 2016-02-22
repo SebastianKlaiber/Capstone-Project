@@ -2,9 +2,7 @@ package sklaiber.com.snow.di.modules;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit.Retrofit;
 import sklaiber.com.snow.network.ResortService;
-import sklaiber.com.snow.network.ResortServiceImpl;
 import sklaiber.com.snow.ui.main.MainContract;
 import sklaiber.com.snow.ui.main.MainPresenterImpl;
 
@@ -26,12 +24,12 @@ public class MainModule {
     }
 
     @Provides
-    public MainContract.UserActionListener providePresenter(MainContract.View mainView, ResortService resortService) {
-        return new MainPresenterImpl(mainView, resortService);
+    public MainContract.UserActionListener providePresenter(MainContract.View mainView) {
+        return new MainPresenterImpl(mainView);
     }
 
-    @Provides
-    public ResortService provideResortService(Retrofit retrofit) {
-        return new ResortServiceImpl(retrofit);
-    }
+    //@Provides
+    //public ResortService provideResortService(Retrofit retrofit) {
+    //    return new ResortServiceImpl(retrofit);
+    //}
 }

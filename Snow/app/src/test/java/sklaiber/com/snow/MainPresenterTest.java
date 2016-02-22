@@ -32,7 +32,7 @@ public class MainPresenterTest {
   @Before
   public void setUpMainPresenter() {
     MockitoAnnotations.initMocks(this);
-    mMainPresenter = new MainPresenterImpl(mainView, resortService);
+    mMainPresenter = new MainPresenterImpl(mainView);
   }
 
   @Test

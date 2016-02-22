@@ -34,6 +34,8 @@ public class SnowApplication extends Application {
         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
         .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
         .build());
+
+    //SyncAdapter.initializeSyncAdapter(this);
   }
 
   public AppComponent createAppComponent() {

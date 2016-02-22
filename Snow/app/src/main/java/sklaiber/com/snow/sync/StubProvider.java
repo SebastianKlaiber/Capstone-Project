@@ -8,6 +8,7 @@ import android.net.Uri;
 /**
  * Created by sklaiber on 17.02.16.
  */
+
 public class StubProvider extends ContentProvider {
   /*
      * Always return true, indicating that the
@@ -16,7 +17,6 @@ public class StubProvider extends ContentProvider {
   @Override public boolean onCreate() {
     return true;
   }
-
   /*
    * Return no type for MIME type
    */

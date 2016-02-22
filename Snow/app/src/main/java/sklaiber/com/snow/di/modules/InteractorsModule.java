@@ -11,6 +11,8 @@ import dagger.Provides;
 import javax.inject.Singleton;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
+import sklaiber.com.snow.network.ResortService;
+import sklaiber.com.snow.network.ResortServiceImpl;
 import sklaiber.com.snow.utils.Constants;
 
 /**
@@ -18,6 +20,11 @@ import sklaiber.com.snow.utils.Constants;
  */
 @Module
 public class InteractorsModule {
+
+    @Provides
+    public ResortService provideResortService(Retrofit retrofit) {
+        return new ResortServiceImpl(retrofit);
+    }
 
     @Provides
     @Singleton

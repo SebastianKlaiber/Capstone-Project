@@ -15,13 +15,12 @@ public class ResortServiceImpl implements ResortService {
 
     private Retrofit retrofit;
 
-    Items items = new Items();
     public ResortServiceImpl(Retrofit retrofit) {
         this.retrofit = retrofit;
     }
 
     @Override
-    public Items getResort(final OnFinishedListener listener) {
+    public void getResort(final OnFinishedListener listener) {
         MyApi myApi= retrofit.create(MyApi.class);
 
         Call<Items> call = myApi.getResort();
@@ -39,6 +38,5 @@ public class ResortServiceImpl implements ResortService {
                 Timber.e(t.getMessage());
             }
         });
-        return items;
     }
 }

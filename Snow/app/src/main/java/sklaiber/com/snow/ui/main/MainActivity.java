@@ -18,18 +18,15 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     setContentView(R.layout.activity_main);
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     SyncAdapter.initializeSyncAdapter(this);
-
   }
 
   @Override protected void onResume() {
     super.onResume();
     SyncAdapter.syncImmediately(this);
-    //mMainPresenter.loadResorts();
   }
 
   @Override protected void setupComponent(AppComponent appComponent) {

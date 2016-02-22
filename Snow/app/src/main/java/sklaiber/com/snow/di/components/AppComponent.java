@@ -6,6 +6,7 @@ import retrofit.Retrofit;
 import sklaiber.com.snow.SnowApplication;
 import sklaiber.com.snow.di.modules.AppModule;
 import sklaiber.com.snow.di.modules.InteractorsModule;
+import sklaiber.com.snow.sync.SyncAdapter;
 
 /**
  * Created by skipj on 11.01.2016.
@@ -17,6 +18,7 @@ import sklaiber.com.snow.di.modules.InteractorsModule;
         AppModule.class, InteractorsModule.class
     }) public interface AppComponent {
   void inject(SnowApplication target);
+  void inject(SyncAdapter target);
 
   Retrofit retrofit();
 }

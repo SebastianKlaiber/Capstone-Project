@@ -10,13 +10,20 @@ import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.os.Build;
 import android.os.Bundle;
+import javax.inject.Inject;
 import sklaiber.com.snow.R;
+import sklaiber.com.snow.SnowApplication;
+import sklaiber.com.snow.models.Items;
+import sklaiber.com.snow.network.ResortService;
+import sklaiber.com.snow.ui.main.OnFinishedListener;
 import timber.log.Timber;
 
 /**
  * Created by sklaiber on 16.02.16.
  */
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
+
+  @Inject ResortService resortService;
 
   // Interval at which to sync with the weather, in seconds.
   // 60 seconds (1 minute) * 180 = 3 hours
@@ -26,10 +33,17 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
   public SyncAdapter(Context context, boolean autoInitialize) {
     super(context, autoInitialize);
+    ((SnowApplication) getContext()).createAppComponent().inject(this);
   }
 
   @Override public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
     Timber.d("Starting Sync");
+
+    resortService.getResort(new OnFinishedListener() {
+      @Override public void onFinished(Items items) {
+        Timber.d(items.getItems().get(0).getName());
+      }
+    });
   }
 
   /**
