@@ -29,7 +29,7 @@
 
     <!-- Stub Content Provider -->
     <provider
-        android:name=".sync.StubProvider"
+        android:name=".database.generated.ResortProvider"
         android:authorities="com.sklaiber.snow.app"
         android:exported="false"
         android:syncable="true"/>
@@ -43,7 +43,6 @@
           android:name="android.accounts.AccountAuthenticator"
           android:resource="@xml/authenticator" />
     </service>
-
 
     <!-- The SyncAdapter service -->
     <service

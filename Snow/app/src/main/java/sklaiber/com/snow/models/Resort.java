@@ -7,6 +7,14 @@ public class Resort {
     String name;
     String conditions;
 
+    public Resort() {
+    }
+
+    public Resort(String name, String conditions) {
+        this.name = name;
+        this.conditions = conditions;
+    }
+
     public String getName() {
         return name;
     }
