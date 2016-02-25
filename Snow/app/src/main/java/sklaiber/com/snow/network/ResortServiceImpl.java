@@ -13,30 +13,27 @@ import timber.log.Timber;
  */
 public class ResortServiceImpl implements ResortService {
 
-    private Retrofit retrofit;
+  private Retrofit retrofit;
 
-    public ResortServiceImpl(Retrofit retrofit) {
-        this.retrofit = retrofit;
-    }
+  public ResortServiceImpl(Retrofit retrofit) {
+    this.retrofit = retrofit;
+  }
 
-    @Override
-    public void getResort(final OnFinishedListener listener) {
-        MyApi myApi= retrofit.create(MyApi.class);
+  @Override public void getResort(final OnFinishedListener listener) {
+    MyApi myApi = retrofit.create(MyApi.class);
 
-        Call<Items> call = myApi.getResort();
+    Call<Items> call = myApi.getResort();
 
-        call.enqueue(new Callback<Items>() {
-            @Override
-            public void onResponse(Response<Items> response, Retrofit retrofit) {
-                if (response.isSuccess()) {
-                    listener.onFinished(response.body());
-                }
-            }
+    call.enqueue(new Callback<Items>() {
+      @Override public void onResponse(Response<Items> response, Retrofit retrofit) {
+        if (response.isSuccess()) {
+          listener.onFinished(response.body());
+        }
+      }
 
-            @Override
-            public void onFailure(Throwable t) {
-                Timber.e(t.getMessage());
-            }
-        });
-    }
+      @Override public void onFailure(Throwable t) {
+        Timber.e(t.getMessage());
+      }
+    });
+  }
 }

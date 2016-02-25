@@ -7,12 +7,11 @@ import android.os.IBinder;
 /**
  * Created by sklaiber on 16.02.16.
  */
-public class ResortAuthenticatorService extends Service{
+public class ResortAuthenticatorService extends Service {
   // Instance field that stores the authenticator object
   private ResortAuthenticator mAuthenticator;
 
-  @Override
-  public void onCreate() {
+  @Override public void onCreate() {
     // Create a new authenticator object
     mAuthenticator = new ResortAuthenticator(this);
   }
@@ -21,8 +20,7 @@ public class ResortAuthenticatorService extends Service{
    * When the system binds to this Service to make the RPC call
    * return the authenticator's IBinder.
    */
-  @Override
-  public IBinder onBind(Intent intent) {
+  @Override public IBinder onBind(Intent intent) {
     return mAuthenticator.getIBinder();
   }
 }

@@ -4,30 +4,30 @@ package sklaiber.com.snow.models;
  * Created by skipj on 11.01.2016.
  */
 public class Resort {
-    String name;
-    String conditions;
+  String name;
+  String conditions;
 
-    public Resort() {
-    }
+  public Resort() {
+  }
 
-    public Resort(String name, String conditions) {
-        this.name = name;
-        this.conditions = conditions;
-    }
+  public Resort(String name, String conditions) {
+    this.name = name;
+    this.conditions = conditions;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getConditions() {
-        return conditions;
-    }
+  public String getConditions() {
+    return conditions;
+  }
 
-    public void setConditions(String conditions) {
-        this.conditions = conditions;
-    }
+  public void setConditions(String conditions) {
+    this.conditions = conditions;
+  }
 }

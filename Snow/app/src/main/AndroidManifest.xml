@@ -30,7 +30,7 @@
     <!-- Stub Content Provider -->
     <provider
         android:name=".database.generated.ResortProvider"
-        android:authorities="com.sklaiber.snow.app"
+        android:authorities="sklaiber.com.snow"
         android:exported="false"
         android:syncable="true"/>
 

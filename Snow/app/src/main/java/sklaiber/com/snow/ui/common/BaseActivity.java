@@ -7,13 +7,12 @@ import sklaiber.com.snow.di.components.AppComponent;
 /**
  * Created by skipj on 12.01.2016.
  */
-public abstract class BaseActivity extends AppCompatActivity{
+public abstract class BaseActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //setupComponent((AppComponent) SnowApplication.get(this).component());
-    }
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    //setupComponent((AppComponent) SnowApplication.get(this).component());
+  }
 
-    protected abstract void setupComponent(AppComponent appComponent);
+  protected abstract void setupComponent(AppComponent appComponent);
 }

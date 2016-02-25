@@ -8,14 +8,14 @@ import net.simonvt.schematic.annotation.TableEndpoint;
 
 @ContentProvider(authority = ResortProvider.AUTHORITY, database = ResortDatabase.class)
 public class ResortProvider {
-  public static final String AUTHORITY = "com.sklaiber.snow.app";
+  public static final String AUTHORITY = "sklaiber.com.snow";
   public static Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
-  interface Path{
+  interface Path {
     String RESORTS = "resorts";
   }
 
-  private static Uri buildUri(String ... paths) {
+  private static Uri buildUri(String... paths) {
     Uri.Builder builder = BASE_CONTENT_URI.buildUpon();
     for (String path : paths) {
       builder.appendPath(path);
@@ -27,17 +27,15 @@ public class ResortProvider {
     @ContentUri(
         path = Path.RESORTS,
         type = "vnd.android.cursor.dir/resorts",
-        defaultSort = ResortColums.NAME + "ASC"
-    )
-    public static final Uri CONTENT_URI = buildUri(Path.RESORTS);
+        defaultSort = ResortColums.NAME + " ASC") public static final Uri CONTENT_URI =
+        buildUri(Path.RESORTS);
 
     @InexactContentUri(
         name = "RESORT_ID",
         path = Path.RESORTS + "/#",
         type = "vnd.android.cursor.item/resort",
         whereColumn = ResortColums._ID,
-        pathSegment = 1)
-    public static Uri withId(long id) {
+        pathSegment = 1) public static Uri withId(long id) {
       return buildUri(Path.RESORTS, String.valueOf(id));
     }
   }

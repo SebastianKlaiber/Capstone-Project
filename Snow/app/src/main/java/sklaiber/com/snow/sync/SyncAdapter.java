@@ -28,7 +28,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
   // Interval at which to sync with the weather, in seconds.
   // 60 seconds (1 minute) * 180 = 3 hours
   public static final int SYNC_INTERVAL = 60 * 180;
-  public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
+  public static final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
   private static final long DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
 
   public SyncAdapter(Context context, boolean autoInitialize) {
@@ -36,7 +36,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     ((SnowApplication) getContext()).createAppComponent().inject(this);
   }
 
-  @Override public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
+  @Override public void onPerformSync(Account account, Bundle extras, String authority,
+      ContentProviderClient provider, SyncResult syncResult) {
     Timber.d("Starting Sync");
 
     resortService.getResort(new OnFinishedListener() {
@@ -60,13 +61,13 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
           setExtras(new Bundle()).build();
       ContentResolver.requestSync(request);
     } else {
-      ContentResolver.addPeriodicSync(account,
-          authority, new Bundle(), syncInterval);
+      ContentResolver.addPeriodicSync(account, authority, new Bundle(), syncInterval);
     }
   }
 
   /**
    * Helper method to have the sync adapter sync immediately
+   *
    * @param context The context used to access the account service
    */
   public static void syncImmediately(Context context) {
@@ -91,11 +92,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
 
     // Create the account type and default account
-    Account newAccount = new Account(
-        context.getString(R.string.app_name), context.getString(R.string.sync_account_type));
+    Account newAccount = new Account(context.getString(R.string.app_name),
+        context.getString(R.string.sync_account_type));
 
     // If the password doesn't exist, the account doesn't exist
-    if ( null == accountManager.getPassword(newAccount) ) {
+    if (null == accountManager.getPassword(newAccount)) {
 
         /*
          * Add the account and account type, no password or user data
@@ -125,7 +126,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         /*
          * Without calling setSyncAutomatically, our periodic sync will not be enabled.
          */
-    ContentResolver.setSyncAutomatically(newAccount, context.getString(R.string.content_authority), true);
+    ContentResolver.setSyncAutomatically(newAccount, context.getString(R.string.content_authority),
+        true);
 
         /*
          * Finally, let's do a sync to get things started
@@ -136,6 +138,4 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
   public static void initializeSyncAdapter(Context context) {
     getSyncAccount(context);
   }
-
-
 }

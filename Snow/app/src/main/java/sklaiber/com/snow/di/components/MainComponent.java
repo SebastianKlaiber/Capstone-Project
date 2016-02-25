@@ -8,10 +8,8 @@ import sklaiber.com.snow.ui.main.MainActivity;
 /**
  * Created by skipj on 11.01.2016.
  */
-@MainScope
-@Component(
+@MainScope @Component(
     dependencies = AppComponent.class,
-    modules = MainModule.class)
-public interface MainComponent {
-    void inject(MainActivity target);
+    modules = MainModule.class) public interface MainComponent {
+  void inject(MainActivity target);
 }

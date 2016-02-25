@@ -8,7 +8,5 @@ import javax.inject.Scope;
 /**
  * Created by skipj on 11.01.2016.
  */
-@Scope
-@Retention(RetentionPolicy.RUNTIME)
-public @interface MainScope {
+@Scope @Retention(RetentionPolicy.RUNTIME) public @interface MainScope {
 }

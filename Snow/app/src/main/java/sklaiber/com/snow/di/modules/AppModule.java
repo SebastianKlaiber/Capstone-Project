@@ -8,19 +8,15 @@ import javax.inject.Singleton;
 /**
  * Created by skipj on 11.01.2016.
  */
-@Module
-public class AppModule {
+@Module public class AppModule {
 
-    Application mApplication;
+  Application mApplication;
 
-    public AppModule(Application application) {
-        mApplication = application;
-    }
+  public AppModule(Application application) {
+    mApplication = application;
+  }
 
-    @Provides
-    @Singleton
-    Application providesApplication() {
-        return mApplication;
-    }
-
+  @Provides @Singleton Application providesApplication() {
+    return mApplication;
+  }
 }

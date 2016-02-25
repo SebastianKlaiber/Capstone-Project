@@ -17,6 +17,7 @@ public class StubProvider extends ContentProvider {
   @Override public boolean onCreate() {
     return true;
   }
+
   /*
    * Return no type for MIME type
    */

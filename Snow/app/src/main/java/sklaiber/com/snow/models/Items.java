@@ -7,14 +7,13 @@ import java.util.ArrayList;
  */
 public class Items {
 
-    ArrayList<Resort> items;
+  ArrayList<Resort> items;
 
-    public ArrayList<Resort> getItems() {
-        return items;
-    }
+  public ArrayList<Resort> getItems() {
+    return items;
+  }
 
-
-    public void setItems(ArrayList<Resort> items) {
-        this.items = items;
-    }
+  public void setItems(ArrayList<Resort> items) {
+    this.items = items;
+  }
 }

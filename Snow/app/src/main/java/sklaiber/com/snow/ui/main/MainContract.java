@@ -13,5 +13,4 @@ public interface MainContract {
   interface UserActionListener {
     void loadResorts();
   }
-
 }

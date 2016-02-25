@@ -8,9 +8,8 @@ import sklaiber.com.snow.models.Items;
  * Created by skipj on 11.01.2016.
  */
 public interface MyApi {
-//    @GET("/_ah/api/myApi/v1/resortbean")
-//    Call<ArrayList<Resort>> getRepository();
+  //    @GET("/_ah/api/myApi/v1/resortbean")
+  //    Call<ArrayList<Resort>> getRepository();
 
-    @GET("/_ah/api/myApi/v1/resortbean")
-    Call<Items> getResort();
+  @GET("/_ah/api/myApi/v1/resortbean") Call<Items> getResort();
 }

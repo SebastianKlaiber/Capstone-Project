@@ -4,6 +4,5 @@ import sklaiber.com.snow.models.Items;
 
 public interface OnFinishedListener {
 
-    void onFinished(Items items);
-
+  void onFinished(Items items);
 }

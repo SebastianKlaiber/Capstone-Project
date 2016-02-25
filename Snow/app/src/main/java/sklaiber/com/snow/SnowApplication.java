@@ -5,8 +5,8 @@ import android.content.Context;
 import com.facebook.stetho.Stetho;
 import sklaiber.com.snow.di.components.AppComponent;
 import sklaiber.com.snow.di.components.DaggerAppComponent;
-import sklaiber.com.snow.di.components.MainComponent;
 import sklaiber.com.snow.di.modules.AppModule;
+import sklaiber.com.snow.sync.SyncAdapter;
 import timber.log.Timber;
 
 /**
@@ -15,7 +15,6 @@ import timber.log.Timber;
 public class SnowApplication extends Application {
 
   private AppComponent appComponent;
-  private MainComponent mainComponent;
 
   @Override public void onCreate() {
     super.onCreate();
@@ -35,7 +34,7 @@ public class SnowApplication extends Application {
         .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
         .build());
 
-    //SyncAdapter.initializeSyncAdapter(this);
+    SyncAdapter.initializeSyncAdapter(this);
   }
 
   public AppComponent createAppComponent() {
@@ -43,6 +42,6 @@ public class SnowApplication extends Application {
   }
 
   public static SnowApplication get(Context context) {
-      return (SnowApplication) context.getApplicationContext();
+    return (SnowApplication) context.getApplicationContext();
   }
 }

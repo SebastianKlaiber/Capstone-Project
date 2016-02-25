@@ -12,12 +12,12 @@ import sklaiber.com.snow.sync.SyncAdapter;
  * Created by skipj on 11.01.2016.
  */
 
-@Singleton
-@Component(
+@Singleton @Component(
     modules = {
         AppModule.class, InteractorsModule.class
     }) public interface AppComponent {
   void inject(SnowApplication target);
+
   void inject(SyncAdapter target);
 
   Retrofit retrofit();
