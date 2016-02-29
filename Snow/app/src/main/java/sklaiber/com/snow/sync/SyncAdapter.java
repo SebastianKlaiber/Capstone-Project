@@ -5,15 +5,21 @@ import android.accounts.AccountManager;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.os.Build;
 import android.os.Bundle;
+import java.util.ArrayList;
+import java.util.Vector;
 import javax.inject.Inject;
 import sklaiber.com.snow.R;
 import sklaiber.com.snow.SnowApplication;
+import sklaiber.com.snow.database.ResortColums;
+import sklaiber.com.snow.database.ResortProvider;
 import sklaiber.com.snow.models.Items;
+import sklaiber.com.snow.models.Resort;
 import sklaiber.com.snow.network.ResortService;
 import sklaiber.com.snow.ui.main.OnFinishedListener;
 import timber.log.Timber;
@@ -42,7 +48,25 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     resortService.getResort(new OnFinishedListener() {
       @Override public void onFinished(Items items) {
-        Timber.d(items.getItems().get(0).getName());
+        ArrayList<Resort> resortArray = items.getItems();
+        Vector<ContentValues> cVVector = new Vector<ContentValues>(resortArray.size());
+
+        for (int i = 0; i < resortArray.size(); i++) {
+
+          ContentValues cv = new ContentValues();
+          cv.put(ResortColums.NAME, items.getItems().get(i).getName());
+          cv.put(ResortColums.CONDITIONS, items.getItems().get(i).getConditions());
+
+          cVVector.add(cv);
+
+          if (cVVector.size() > 0) {
+            ContentValues[] cvArray = new ContentValues[cVVector.size()];
+            cVVector.toArray(cvArray);
+            getContext().getContentResolver()
+                .bulkInsert(ResortProvider.Resorts.CONTENT_URI, cvArray);
+          }
+        }
+        Timber.d("Sync Complete. " + cVVector.size() + " Inserted");
       }
     });
   }

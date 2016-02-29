@@ -7,13 +7,8 @@
 package com.sklaiber.snow.backend;
 
 import com.google.api.server.spi.config.Api;
-import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
-import com.google.api.server.spi.response.NotFoundException;
-
 import java.util.ArrayList;
-
-import javax.inject.Named;
 
 /** An endpoint class we are exposing */
 @Api(
@@ -37,8 +32,4 @@ public class MyEndpoint {
     public ArrayList<ResortBean> listResort() {
         return resort;
     }
-
-//    public ArrayList<ResortBean> getResort() {
-//        return new ResortBean();
-//    }
 }
