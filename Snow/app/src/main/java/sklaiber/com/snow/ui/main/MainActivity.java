@@ -7,10 +7,9 @@ import sklaiber.com.snow.R;
 import sklaiber.com.snow.di.components.AppComponent;
 import sklaiber.com.snow.di.components.DaggerMainComponent;
 import sklaiber.com.snow.di.modules.MainModule;
-import sklaiber.com.snow.models.Items;
+import sklaiber.com.snow.models.Resort;
 import sklaiber.com.snow.sync.SyncAdapter;
 import sklaiber.com.snow.ui.common.BaseActivity;
-import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements MainContract.View {
 
@@ -37,7 +36,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         .inject(this);
   }
 
-  @Override public void showResorts(Items items) {
-    Timber.d(items.getItems().get(0).getName());
+  @Override public void showResorts(Resort resort) {
+
   }
 }

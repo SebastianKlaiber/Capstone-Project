@@ -7,7 +7,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import sklaiber.com.snow.models.Items;
 import sklaiber.com.snow.models.Resort;
 import sklaiber.com.snow.network.ResortService;
 import sklaiber.com.snow.ui.main.MainContract;

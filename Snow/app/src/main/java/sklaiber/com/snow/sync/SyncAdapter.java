@@ -11,13 +11,13 @@ import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.os.Build;
 import android.os.Bundle;
-import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import sklaiber.com.snow.R;
 import sklaiber.com.snow.SnowApplication;
 import sklaiber.com.snow.database.ResortColums;
 import sklaiber.com.snow.database.ResortProvider;
-import sklaiber.com.snow.models.Items;
+import sklaiber.com.snow.models.Item;
 import sklaiber.com.snow.models.Resort;
 import sklaiber.com.snow.network.ResortService;
 import sklaiber.com.snow.ui.main.OnFinishedListener;
@@ -46,29 +46,26 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     Timber.d("Starting Sync");
 
     resortService.getResort(new OnFinishedListener() {
-      @Override public void onFinished(Items items) {
-        ArrayList<Resort> resortArray = items.getItems();
+      @Override public void onFinished(Resort resort) {
+        List<Item> resortArray = resort.getItems();
 
         for (int i = 0; i < resortArray.size(); i++) {
           ContentValues values = new ContentValues();
           values.put(ResortColums.NAME, resortArray.get(i).getName());
           values.put(ResortColums.CONDITIONS, resortArray.get(i).getConditions());
 
-          int rows = getContext().getContentResolver().update(ResortProvider.Resorts.CONTENT_URI,
-              values,
-              ResortColums.NAME + "=?",
-              new String[]{resortArray.get(i).getName()});
+          int rows = getContext().getContentResolver()
+              .update(ResortProvider.Resorts.CONTENT_URI, values, ResortColums.NAME + "=?",
+                  new String[] { resortArray.get(i).getName() });
 
-          // Check if update succeeded
           if (rows == 0) {
             getContext().getContentResolver().insert(ResortProvider.Resorts.CONTENT_URI, values);
-
-            Timber.d("Insert %s into Database.", resortArray.get(i).getName() );
+            Timber.d("Add %s to Database.", resortArray.get(i).getName());
           }
         }
-        Timber.d("Sync Complete.");
       }
     });
+    Timber.d("Sync finished.");
   }
 
   /**
