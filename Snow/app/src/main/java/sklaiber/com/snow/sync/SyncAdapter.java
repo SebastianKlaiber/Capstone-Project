@@ -12,7 +12,6 @@ import android.content.SyncResult;
 import android.os.Build;
 import android.os.Bundle;
 import java.util.ArrayList;
-import java.util.Vector;
 import javax.inject.Inject;
 import sklaiber.com.snow.R;
 import sklaiber.com.snow.SnowApplication;
@@ -49,24 +48,25 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     resortService.getResort(new OnFinishedListener() {
       @Override public void onFinished(Items items) {
         ArrayList<Resort> resortArray = items.getItems();
-        Vector<ContentValues> cVVector = new Vector<ContentValues>(resortArray.size());
 
         for (int i = 0; i < resortArray.size(); i++) {
+          ContentValues values = new ContentValues();
+          values.put(ResortColums.NAME, resortArray.get(i).getName());
+          values.put(ResortColums.CONDITIONS, resortArray.get(i).getConditions());
 
-          ContentValues cv = new ContentValues();
-          cv.put(ResortColums.NAME, items.getItems().get(i).getName());
-          cv.put(ResortColums.CONDITIONS, items.getItems().get(i).getConditions());
+          int rows = getContext().getContentResolver().update(ResortProvider.Resorts.CONTENT_URI,
+              values,
+              ResortColums.NAME + "=?",
+              new String[]{resortArray.get(i).getName()});
 
-          cVVector.add(cv);
+          // Check if update succeeded
+          if (rows == 0) {
+            getContext().getContentResolver().insert(ResortProvider.Resorts.CONTENT_URI, values);
 
-          if (cVVector.size() > 0) {
-            ContentValues[] cvArray = new ContentValues[cVVector.size()];
-            cVVector.toArray(cvArray);
-            getContext().getContentResolver()
-                .bulkInsert(ResortProvider.Resorts.CONTENT_URI, cvArray);
+            Timber.d("Insert %s into Database.", resortArray.get(i).getName() );
           }
         }
-        Timber.d("Sync Complete. " + cVVector.size() + " Inserted");
+        Timber.d("Sync Complete.");
       }
     });
   }
