@@ -27,7 +27,7 @@ public class ResortProvider {
     @ContentUri(
         path = Path.RESORTS,
         type = "vnd.android.cursor.dir/resorts",
-        defaultSort = ResortColums.NAME + " ASC") public static final Uri CONTENT_URI =
+        defaultSort = ResortColums.NAME + " DESC") public static final Uri CONTENT_URI =
         buildUri(Path.RESORTS);
 
     @InexactContentUri(

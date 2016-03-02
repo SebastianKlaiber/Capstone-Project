@@ -11,7 +11,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    //setupComponent((AppComponent) SnowApplication.get(this).component());
+    //setupComponent((AppComponent) SnowApplication.get(this));
   }
 
   protected abstract void setupComponent(AppComponent appComponent);

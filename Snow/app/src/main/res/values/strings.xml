@@ -5,4 +5,5 @@
     <!-- SyncAdapter related -->
     <string name="sync_account_type">sklaiber.com.snow</string>
     <string name="content_authority">sklaiber.com.snow</string>
+    <string name="empty_resort_list">No Resort Information Available</string>
 </resources>
