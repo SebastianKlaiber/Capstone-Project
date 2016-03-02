@@ -24,6 +24,7 @@ public class ResortAdapter extends RecyclerView.Adapter<ResortAdapter.ViewHolder
   public class ViewHolder extends RecyclerView.ViewHolder {
 
     @Bind(R.id.list_item_name_textview) TextView name;
+    @Bind(R.id.list_item_conditions_textview) TextView conditions;
 
     public ViewHolder(View itemView) {
       super(itemView);
@@ -50,6 +51,7 @@ public class ResortAdapter extends RecyclerView.Adapter<ResortAdapter.ViewHolder
   @Override public void onBindViewHolder(ViewHolder holder, int position) {
     mCursor.moveToPosition(position);
     holder.name.setText(mCursor.getString(mCursor.getColumnIndexOrThrow(ResortColums.NAME)));
+    holder.conditions.setText(mCursor.getString(mCursor.getColumnIndexOrThrow(ResortColums.CONDITIONS)));
   }
 
   @Override public int getItemCount() {
