@@ -1,9 +1,12 @@
 <resources>
-    <string name="app_name">Snow</string>
-    <string name="action_settings">Settings</string>
+  <string name="app_name">Snow</string>
+  <string name="action_settings">Settings</string>
 
-    <!-- SyncAdapter related -->
-    <string name="sync_account_type">sklaiber.com.snow</string>
-    <string name="content_authority">sklaiber.com.snow</string>
-    <string name="empty_resort_list">No Resort Information Available</string>
+  <!-- SyncAdapter related -->
+  <string name="sync_account_type">sklaiber.com.snow</string>
+  <string name="content_authority">sklaiber.com.snow</string>
+  <string name="empty_resort_list">No Resort Information Available</string>
+
+  <!-- TODO: Remove or change this placeholder text -->
+  <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

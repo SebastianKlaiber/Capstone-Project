@@ -2,9 +2,11 @@ package sklaiber.com.snow.ui.main;
 
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,17 +16,14 @@ import butterknife.ButterKnife;
 import javax.inject.Inject;
 import sklaiber.com.snow.R;
 import sklaiber.com.snow.database.ResortProvider;
-import sklaiber.com.snow.di.components.AppComponent;
-import sklaiber.com.snow.di.components.DaggerMainComponent;
-import sklaiber.com.snow.di.modules.MainModule;
-import sklaiber.com.snow.models.Resort;
 import sklaiber.com.snow.sync.SyncAdapter;
 import sklaiber.com.snow.ui.adapter.ResortAdapter;
-import sklaiber.com.snow.ui.common.BaseActivity;
+import sklaiber.com.snow.ui.detail.DetailActivity;
 
-public class MainActivity extends BaseActivity implements MainContract.View, LoaderManager.LoaderCallbacks<Cursor>{
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
   @Inject MainContract.UserActionListener mMainPresenter;
+
   @Bind(R.id.recyclerview_resort) RecyclerView mRecyclerView;
   @Bind(R.id.recyclerview_resort_empty) TextView mEmptyText;
 
@@ -50,24 +49,18 @@ public class MainActivity extends BaseActivity implements MainContract.View, Loa
     // in content do not change the layout size of the RecyclerView
     mRecyclerView.setHasFixedSize(true);
 
-    mResortAdapter = new ResortAdapter(getApplicationContext(), mEmptyText);
+    mResortAdapter = new ResortAdapter(getApplicationContext(), mEmptyText, new ResortAdapter.OnClickHandler() {
+      @Override public void onClick(String name, ResortAdapter.ViewHolder vh) {
+        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+        intent.putExtra("name", name);
+        startActivity(intent);
+      }
+    });
     mRecyclerView.setAdapter(mResortAdapter);
   }
 
   @Override protected void onResume() {
     super.onResume();
-  }
-
-  @Override protected void setupComponent(AppComponent appComponent) {
-    DaggerMainComponent.builder()
-        .appComponent(appComponent)
-        .mainModule(new MainModule(this))
-        .build()
-        .inject(this);
-  }
-
-  @Override public void showResorts(Resort resort) {
-
   }
 
   @Override public Loader<Cursor> onCreateLoader(int id, Bundle args) {

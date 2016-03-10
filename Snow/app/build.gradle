@@ -2,87 +2,90 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
 
-    defaultConfig {
-        applicationId "sklaiber.com.snow"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+  defaultConfig {
+    applicationId "sklaiber.com.snow"
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
+    versionCode 1
+    versionName "1.0"
 
-        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+    testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+  }
 
-    // Always show the result of every unit test, even if it passes.
-    testOptions.unitTests.all {
-        testLogging {
-            events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
-        }
+  // Always show the result of every unit test, even if it passes.
+  testOptions.unitTests.all {
+    testLogging {
+      events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
     }
+  }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(path: ':backend', configuration: 'android-endpoints')
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  compile project(path: ':backend', configuration: 'android-endpoints')
 
-    // App's dependencies, including test
-    compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
-    compile "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
-    compile "com.android.support:design:$rootProject.ext.supportLibraryVersion"
-    compile "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
-    compile "com.android.support:support-v4:$rootProject.ext.supportLibraryVersion"
-    compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
-    compile "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
-    compile "com.squareup.retrofit:converter-gson:$rootProject.ext.gsonConverterVersion"
-    compile "com.jakewharton.timber:timber:$rootProject.ext.timberVersion"
-    compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
-    compile "com.facebook.stetho:stetho:$rootProject.ext.stethoVersion"
-    compile "com.facebook.stetho:stetho-urlconnection:$rootProject.ext.stethoVersion"
+  // App's dependencies, including test
+  compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+  compile "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
+  compile "com.android.support:design:$rootProject.ext.supportLibraryVersion"
+  compile "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
+  compile "com.android.support:support-v4:$rootProject.ext.supportLibraryVersion"
+  compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+  compile "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
+  compile "com.squareup.retrofit:converter-gson:$rootProject.ext.gsonConverterVersion"
+  compile "com.jakewharton.timber:timber:$rootProject.ext.timberVersion"
+  compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
+  compile "com.facebook.stetho:stetho:$rootProject.ext.stethoVersion"
+  compile "com.facebook.stetho:stetho-urlconnection:$rootProject.ext.stethoVersion"
 
-    apt "net.simonvt.schematic:schematic-compiler:$rootProject.ext.schematicVersion"
-    compile "net.simonvt.schematic:schematic:$rootProject.ext.schematicVersion"
+  apt "net.simonvt.schematic:schematic-compiler:$rootProject.ext.schematicVersion"
+  compile "net.simonvt.schematic:schematic:$rootProject.ext.schematicVersion"
 
-    // Depedencies for Dagger2
-    compile "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
-    apt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
-    provided 'javax.annotation:jsr250-api:1.0'
+  // Depedencies for Dagger2
+  compile "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
+  apt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
+  provided 'javax.annotation:jsr250-api:1.0'
 
-    // Instrumentation Tests
-    androidTestCompile "com.android.support.test:runner:$rootProject.ext.runnerVersion"
-    // Set this dependency to use JUnit 4 rules
-    androidTestCompile "com.android.support.test:rules:$rootProject.ext.runnerVersion"
-    // Support annotations
-    androidTestCompile "com.android.support:support-annotations:$rootProject.ext.supportLibraryVersion"
-    // Espresso-contrib for DatePicker, RecyclerView, Drawer actions, Accessibility checks, CountingIdlingResource
+  // Instrumentation Tests
+  androidTestCompile "com.android.support.test:runner:$rootProject.ext.runnerVersion"
+  // Set this dependency to use JUnit 4 rules
+  androidTestCompile "com.android.support.test:rules:$rootProject.ext.runnerVersion"
+  // Support annotations
+  androidTestCompile "com.android.support:support-annotations:$rootProject.ext.supportLibraryVersion"
+  // Espresso-contrib for DatePicker, RecyclerView, Drawer actions, Accessibility checks, CountingIdlingResource
 
-    // Espresso UI Testing dependencies.
-    androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
-    androidTestCompile ("com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion") {
-        exclude module: 'support-annotations'
-        exclude module: 'support-v4'
-        exclude module: 'support-v13'
-        exclude module: 'recyclerview-v7'
-    }
+  // Espresso UI Testing dependencies.
+  androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
+  androidTestCompile(
+      "com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion") {
+    exclude module: 'support-annotations'
+    exclude module: 'support-v4'
+    exclude module: 'support-v13'
+    exclude module: 'recyclerview-v7'
+  }
 
-    // Dependencies for local unit tests
-    testCompile "junit:junit:$rootProject.ext.junitVersion"
-    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
-    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
-    testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito"
-    testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
+  // Dependencies for local unit tests
+  testCompile "junit:junit:$rootProject.ext.junitVersion"
+  testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
+  testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
+  testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito"
+  testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
 
-    androidTestCompile "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
-    androidTestCompile "com.google.dexmaker:dexmaker:$rootProject.ext.dexmeterVersion"
-    androidTestCompile "com.google.dexmaker:dexmaker-mockito:$rootProject.ext.dexmeterVersion"
-    androidTestApt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
+  androidTestCompile "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
+  androidTestCompile "com.google.dexmaker:dexmaker:$rootProject.ext.dexmeterVersion"
+  androidTestCompile "com.google.dexmaker:dexmaker-mockito:$rootProject.ext.dexmeterVersion"
+  androidTestApt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
+  compile 'com.google.android.gms:play-services-maps:8.4.0'
+  compile 'com.android.support:support-v4:23.2.0'
 }
 
 /*
@@ -90,12 +93,12 @@ Resolves dependency versions across test and production APKs, specifically, tran
 dependencies. This is required since Espresso internally has a dependency on support-annotations.
 */
 configurations.all {
-    resolutionStrategy.force "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+  resolutionStrategy.force "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
 }
 
 configurations.compile.dependencies.each { compileDependency ->
-    println "Excluding compile dependency: ${compileDependency.getName()}"
-    configurations.androidTestCompile.dependencies.each { androidTestCompileDependency ->
-        configurations.androidTestCompile.exclude module: "${compileDependency.getName()}"
-    }
+  println "Excluding compile dependency: ${compileDependency.getName()}"
+  configurations.androidTestCompile.dependencies.each { androidTestCompileDependency ->
+    configurations.androidTestCompile.exclude module: "${compileDependency.getName()}"
+  }
 }

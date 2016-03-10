@@ -20,8 +20,9 @@ public class ResortAdapter extends RecyclerView.Adapter<ResortAdapter.ViewHolder
   private Cursor mCursor;
   final private Context mContext;
   final private View mEmptyView;
+  final private OnClickHandler mOnClickHandler;
 
-  public class ViewHolder extends RecyclerView.ViewHolder {
+  public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     @Bind(R.id.list_item_name_textview) TextView name;
     @Bind(R.id.list_item_conditions_textview) TextView conditions;
@@ -29,7 +30,15 @@ public class ResortAdapter extends RecyclerView.Adapter<ResortAdapter.ViewHolder
     public ViewHolder(View itemView) {
       super(itemView);
       ButterKnife.bind(this, itemView);
+      itemView.setOnClickListener(this);
     }
+
+    @Override public void onClick(View v) {
+      int adapterPosition = getAdapterPosition();
+      mCursor.moveToPosition(adapterPosition);
+      mOnClickHandler.onClick(mCursor.getString(mCursor.getColumnIndexOrThrow(ResortColums.NAME)), this);
+    }
+
   }
 
   @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -43,9 +52,14 @@ public class ResortAdapter extends RecyclerView.Adapter<ResortAdapter.ViewHolder
     }
   }
 
-  public ResortAdapter(Context context, View emptyView) {
+  public static interface OnClickHandler {
+    void onClick(String name,ViewHolder vh);
+  }
+
+  public ResortAdapter(Context context, View emptyView, OnClickHandler onClickHandler) {
     mContext = context;
     mEmptyView = emptyView;
+    mOnClickHandler = onClickHandler;
   }
 
   @Override public void onBindViewHolder(ViewHolder holder, int position) {
