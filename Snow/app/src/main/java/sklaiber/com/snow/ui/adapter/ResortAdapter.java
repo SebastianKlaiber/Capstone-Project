@@ -2,6 +2,7 @@ package sklaiber.com.snow.ui.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,9 +37,11 @@ public class ResortAdapter extends RecyclerView.Adapter<ResortAdapter.ViewHolder
     @Override public void onClick(View v) {
       int adapterPosition = getAdapterPosition();
       mCursor.moveToPosition(adapterPosition);
-      mOnClickHandler.onClick(mCursor.getString(mCursor.getColumnIndexOrThrow(ResortColums.NAME)), 47.2268f, 12.0432f, this);
+      mOnClickHandler.onClick(mCursor.getString(mCursor.getColumnIndexOrThrow(ResortColums.NAME)),
+          mCursor.getFloat(mCursor.getColumnIndexOrThrow(ResortColums.LATITUDE)),
+          mCursor.getFloat(mCursor.getColumnIndexOrThrow(ResortColums.LONGITUDE)),
+          this);
     }
-
   }
 
   @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -64,8 +67,12 @@ public class ResortAdapter extends RecyclerView.Adapter<ResortAdapter.ViewHolder
 
   @Override public void onBindViewHolder(ViewHolder holder, int position) {
     mCursor.moveToPosition(position);
+
+    ViewCompat.setTransitionName(holder.name, "name" + position);
+
     holder.name.setText(mCursor.getString(mCursor.getColumnIndexOrThrow(ResortColums.NAME)));
     holder.conditions.setText(mCursor.getString(mCursor.getColumnIndexOrThrow(ResortColums.CONDITIONS)));
+
   }
 
   @Override public int getItemCount() {

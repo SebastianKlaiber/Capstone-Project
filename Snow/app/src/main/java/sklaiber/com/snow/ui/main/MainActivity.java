@@ -80,9 +80,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
   @Override public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
     mResortAdapter.swapCursor(data);
+    updateEmptyView();
   }
 
   @Override public void onLoaderReset(Loader<Cursor> loader) {
     mResortAdapter.swapCursor(null);
+  }
+
+  private void updateEmptyView() {
+    if ( mResortAdapter.getItemCount() == 0 ) {
+      if ( null != mEmptyText ) {
+        mEmptyText.setText(R.string.empty_resort_list);
+      }
+    }
   }
 }

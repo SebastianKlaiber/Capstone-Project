@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SyncRequest;
 import android.content.SyncResult;
@@ -14,6 +15,8 @@ import java.util.List;
 import javax.inject.Inject;
 import sklaiber.com.snow.R;
 import sklaiber.com.snow.SnowApplication;
+import sklaiber.com.snow.database.ResortColums;
+import sklaiber.com.snow.database.ResortProvider;
 import sklaiber.com.snow.models.Item;
 import sklaiber.com.snow.models.Resort;
 import sklaiber.com.snow.network.ResortService;
@@ -46,22 +49,27 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       @Override public void onFinished(Resort resort) {
         List<Item> resortArray = resort.getItems();
 
-        Timber.d(resortArray.get(0).getName());
+        for (int i = 0; i < resortArray.size(); i++) {
+          ContentValues values = new ContentValues();
+          values.put(ResortColums.NAME, resortArray.get(i).getName());
+          values.put(ResortColums.CONDITIONS, resortArray.get(i).getConditions());
+          values.put(ResortColums.LATITUDE, resortArray.get(i).getLatitude());
+          values.put(ResortColums.LONGITUDE, resortArray.get(i).getLongitude());
+          values.put(ResortColums.SNOW_MOUNTAIN, resortArray.get(i).getSnowDepthMountain());
+          values.put(ResortColums.SNOW_VALLEY, resortArray.get(i).getGetSnowDepthValley());
+          values.put(ResortColums.NEW_SNOW, resortArray.get(i).getNewSnow());
+          values.put(ResortColums.HOMEPAGE, resortArray.get(i).getHomepage());
+          values.put(ResortColums.PHONE_NUMBER, resortArray.get(i).getPhoneNumber());
 
-        //for (int i = 0; i < resortArray.size(); i++) {
-        //  ContentValues values = new ContentValues();
-        //  values.put(ResortColums.NAME, resortArray.get(i).getName());
-        //  values.put(ResortColums.CONDITIONS, resortArray.get(i).getConditions());
-        //
-        //  int rows = getContext().getContentResolver()
-        //      .update(ResortProvider.Resorts.CONTENT_URI, values, ResortColums.NAME + "=?",
-        //          new String[] { resortArray.get(i).getName() });
-        //
-        //  if (rows == 0) {
-        //    getContext().getContentResolver().insert(ResortProvider.Resorts.CONTENT_URI, values);
-        //    Timber.d("Add %s to Database.", resortArray.get(i).getName());
-        //  }
-        //}
+          int rows = getContext().getContentResolver()
+              .update(ResortProvider.Resorts.CONTENT_URI, values, ResortColums.NAME + "=?",
+                  new String[] { resortArray.get(i).getName() });
+
+          if (rows == 0) {
+            getContext().getContentResolver().insert(ResortProvider.Resorts.CONTENT_URI, values);
+            Timber.d("Add %s to Database.", resortArray.get(i).getName());
+          }
+        }
       }
     });
     Timber.d("Sync finished.");

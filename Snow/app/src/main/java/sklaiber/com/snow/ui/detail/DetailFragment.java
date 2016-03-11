@@ -18,7 +18,10 @@ import sklaiber.com.snow.database.ResortProvider;
 
 public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-  @Bind(R.id.fragment_condition) TextView mConditonTV;
+  @Bind(R.id.snow_conditions_tv) TextView mConditonTV;
+  @Bind(R.id.new_snow_tv) TextView mNewSnowTV;
+  @Bind(R.id.snow_mountain_tv) TextView mSnowMountainTV;
+  @Bind(R.id.snow_valley) TextView mSnowValleyTV;
 
   private static final int URL_LOADER = 0;
 
@@ -61,6 +64,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
   @Override public void onLoadFinished(android.support.v4.content.Loader<Cursor> loader, Cursor data) {
     data.moveToFirst();
     mConditonTV.setText(data.getString(data.getColumnIndexOrThrow(ResortColums.CONDITIONS)));
+    mNewSnowTV.setText(getString(R.string.snow, data.getString(data.getColumnIndexOrThrow(ResortColums.NEW_SNOW))));
+    mSnowMountainTV.setText(getString(R.string.snow, data.getString(data.getColumnIndexOrThrow(ResortColums.SNOW_MOUNTAIN))));
+    mSnowValleyTV.setText(getString(R.string.snow, data.getString(data.getColumnIndexOrThrow(ResortColums.SNOW_VALLEY))));
   }
 
   @Override public void onLoaderReset(android.support.v4.content.Loader<Cursor> loader) {

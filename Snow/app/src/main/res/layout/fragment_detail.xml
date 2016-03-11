@@ -41,6 +41,7 @@
           android:paddingTop="20dp"
           >
         <TextView
+            android:id="@+id/new_snow_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -69,7 +70,7 @@
         android:paddingTop="20dp"
         >
       <TextView
-          android:id="@+id/fragment_condition"
+          android:id="@+id/snow_conditions_tv"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -97,6 +98,7 @@
         android:paddingTop="20dp"
         >
       <TextView
+          android:id="@+id/snow_mountain_tv"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="100 cm"
@@ -123,6 +125,7 @@
         android:paddingTop="20dp"
         >
       <TextView
+          android:id="@+id/snow_valley"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="10 cm"
