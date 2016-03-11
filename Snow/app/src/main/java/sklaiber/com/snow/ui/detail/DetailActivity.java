@@ -1,9 +1,5 @@
 package sklaiber.com.snow.ui.detail;
 
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -20,13 +16,10 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import sklaiber.com.snow.R;
-import sklaiber.com.snow.database.ResortProvider;
 import timber.log.Timber;
 
-public class DetailActivity extends AppCompatActivity
-    implements LoaderManager.LoaderCallbacks<Cursor> {
+public class DetailActivity extends AppCompatActivity {
 
-  private static final int URL_LOADER = 0;
   private LatLng latLng;
 
   @Bind(R.id.mapview) MapView mMapView;
@@ -41,7 +34,7 @@ public class DetailActivity extends AppCompatActivity
 
     float lat = getIntent().getFloatExtra("lat", 0);
     float longt = getIntent().getFloatExtra("longt", 0);
-    Timber.d("Lat " + String.valueOf(lat));
+
     latLng = new LatLng(lat, longt);
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -69,8 +62,6 @@ public class DetailActivity extends AppCompatActivity
           googleMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
       }
     });
-
-    getLoaderManager().initLoader(URL_LOADER, null, this);
   }
 
   @Override
@@ -128,20 +119,5 @@ public class DetailActivity extends AppCompatActivity
         return true;
     }
     return super.onOptionsItemSelected(item);
-  }
-
-  @Override public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-    String name = getIntent().getStringExtra("name");
-    return new CursorLoader(getApplicationContext(), ResortProvider.Resorts.CONTENT_URI, null,
-        "name=?", new String[] { name }, null);
-  }
-
-  @Override public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-    data.moveToFirst();
-    Timber.d(String.valueOf(data.getCount()));
-  }
-
-  @Override public void onLoaderReset(Loader<Cursor> loader) {
-
   }
 }
