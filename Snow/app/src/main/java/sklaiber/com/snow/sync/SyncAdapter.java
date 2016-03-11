@@ -5,7 +5,6 @@ import android.accounts.AccountManager;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SyncRequest;
 import android.content.SyncResult;
@@ -15,8 +14,6 @@ import java.util.List;
 import javax.inject.Inject;
 import sklaiber.com.snow.R;
 import sklaiber.com.snow.SnowApplication;
-import sklaiber.com.snow.database.ResortColums;
-import sklaiber.com.snow.database.ResortProvider;
 import sklaiber.com.snow.models.Item;
 import sklaiber.com.snow.models.Resort;
 import sklaiber.com.snow.network.ResortService;
@@ -49,20 +46,22 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
       @Override public void onFinished(Resort resort) {
         List<Item> resortArray = resort.getItems();
 
-        for (int i = 0; i < resortArray.size(); i++) {
-          ContentValues values = new ContentValues();
-          values.put(ResortColums.NAME, resortArray.get(i).getName());
-          values.put(ResortColums.CONDITIONS, resortArray.get(i).getConditions());
+        Timber.d(resortArray.get(0).getName());
 
-          int rows = getContext().getContentResolver()
-              .update(ResortProvider.Resorts.CONTENT_URI, values, ResortColums.NAME + "=?",
-                  new String[] { resortArray.get(i).getName() });
-
-          if (rows == 0) {
-            getContext().getContentResolver().insert(ResortProvider.Resorts.CONTENT_URI, values);
-            Timber.d("Add %s to Database.", resortArray.get(i).getName());
-          }
-        }
+        //for (int i = 0; i < resortArray.size(); i++) {
+        //  ContentValues values = new ContentValues();
+        //  values.put(ResortColums.NAME, resortArray.get(i).getName());
+        //  values.put(ResortColums.CONDITIONS, resortArray.get(i).getConditions());
+        //
+        //  int rows = getContext().getContentResolver()
+        //      .update(ResortProvider.Resorts.CONTENT_URI, values, ResortColums.NAME + "=?",
+        //          new String[] { resortArray.get(i).getName() });
+        //
+        //  if (rows == 0) {
+        //    getContext().getContentResolver().insert(ResortProvider.Resorts.CONTENT_URI, values);
+        //    Timber.d("Add %s to Database.", resortArray.get(i).getName());
+        //  }
+        //}
       }
     });
     Timber.d("Sync finished.");

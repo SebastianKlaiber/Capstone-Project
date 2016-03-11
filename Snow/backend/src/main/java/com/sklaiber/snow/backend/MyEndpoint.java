@@ -21,9 +21,26 @@ import java.util.ArrayList;
   public static ArrayList<ResortBean> resort = new ArrayList<>();
 
   static {
-    resort.add(new ResortBean("SkiResort1", "good"));
-    resort.add(new ResortBean("SkiResort2", "old snow"));
-    resort.add(new ResortBean("Ski Resort 3", "good"));
+    ResortBean gerlos = new ResortBean("Gerlos", "good");
+    gerlos.setLatitude(47.2268f);
+    gerlos.setLongitude(12.0432f);
+    gerlos.setSnowDepthMountain(100);
+    gerlos.setGetSnowDepthValley(10);
+    gerlos.setNewSnow(10);
+    gerlos.setPhoneNumber("+4352845376");
+    gerlos.setHomepage("www.zillertalarena.com");
+
+    ResortBean alpbach = new ResortBean("Alpbachtal", "old snow");
+    alpbach.setLatitude(47.4167f);
+    alpbach.setLongitude(11.8833f);
+    alpbach.setSnowDepthMountain(120);
+    alpbach.setGetSnowDepthValley(25);
+    alpbach.setNewSnow(15);
+    alpbach.setPhoneNumber("+43533721200");
+    alpbach.setHomepage("www.alpbachtal.at");
+
+    resort.add(gerlos);
+    resort.add(alpbach);
   }
 
   public ArrayList<ResortBean> listResort() {

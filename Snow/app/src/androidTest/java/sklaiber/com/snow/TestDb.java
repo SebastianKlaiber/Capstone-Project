@@ -6,17 +6,14 @@ import android.test.AndroidTestCase;
 import sklaiber.com.snow.database.ResortColums;
 import sklaiber.com.snow.database.ResortProvider;
 
-/**
- * Created by sklaiber on 29.02.16.
- */
-
 public class TestDb extends AndroidTestCase {
 
   void deleteTheDatabase() {
     mContext.deleteDatabase("resortDatabase.db");
   }
 
-  public void setUp() {
+  @Override protected void setUp() throws Exception {
+    super.setUp();
     deleteTheDatabase();
   }
 
@@ -26,6 +23,8 @@ public class TestDb extends AndroidTestCase {
     ContentValues cv = new ContentValues();
     cv.put(ResortColums.NAME, name);
     cv.put(ResortColums.CONDITIONS, "good");
+    cv.put(ResortColums.LATITUDE, 42f);
+    cv.put(ResortColums.LONGITUDE, 11f);
 
     mContext.getContentResolver().insert(ResortProvider.Resorts.CONTENT_URI, cv);
 
@@ -35,12 +34,13 @@ public class TestDb extends AndroidTestCase {
         null,
         null);
 
+    assert cursor != null;
     assertTrue("Error: This means that we were unable to query the database for the table information.",
         cursor.moveToFirst());
 
-    if (cursor != null) {
-      cursor.moveToFirst();
-      assertEquals(name, cursor.getString(cursor.getColumnIndex(ResortColums.NAME)));
-    }
+    cursor.moveToFirst();
+    assertEquals(name, cursor.getString(cursor.getColumnIndex(ResortColums.NAME)));
+    assertEquals(42f, cursor.getFloat(cursor.getColumnIndexOrThrow(ResortColums.LATITUDE)));
+    assertEquals(11f, cursor.getFloat(cursor.getColumnIndexOrThrow(ResortColums.LONGITUDE)));
   }
 }

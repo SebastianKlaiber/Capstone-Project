@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class Resort {
 
-
   @SerializedName("items")
   @Expose
   private List<Item> items = new ArrayList<Item>();
@@ -33,30 +32,4 @@ public class Resort {
     this.items = items;
   }
 
-  //String name;
-  //String conditions;
-  //
-  //public Resort() {
-  //}
-  //
-  //public Resort(String name, String conditions) {
-  //  this.name = name;
-  //  this.conditions = conditions;
-  //}
-  //
-  //public String getName() {
-  //  return name;
-  //}
-  //
-  //public void setName(String name) {
-  //  this.name = name;
-  //}
-  //
-  //public String getConditions() {
-  //  return conditions;
-  //}
-  //
-  //public void setConditions(String conditions) {
-  //  this.conditions = conditions;
-  //}
 }
