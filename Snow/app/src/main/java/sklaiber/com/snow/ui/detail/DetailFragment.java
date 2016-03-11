@@ -1,12 +1,11 @@
 package sklaiber.com.snow.ui.detail;
 
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,14 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import sklaiber.com.snow.R;
+import sklaiber.com.snow.database.ResortColums;
 import sklaiber.com.snow.database.ResortProvider;
 
 public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-  @Bind(R.id.conditions) TextView mConditions;
+  @Bind(R.id.fragment_condition) TextView mConditonTV;
+
+  private static final int URL_LOADER = 0;
 
   private String mName;
 
@@ -26,7 +28,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     // Required empty public constructor
   }
 
-  public static DetailFragment newInstance(String name){
+  public static DetailFragment newInstance(String name) {
     DetailFragment detailFragment = new DetailFragment();
     Bundle args = new Bundle();
     args.putString("name", name);
@@ -39,25 +41,28 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     mName = getArguments().getString("name");
   }
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    View rootView =  inflater.inflate(R.layout.fragment_detail, container, false);
+    View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
     ButterKnife.bind(this, rootView);
+
+    getLoaderManager().initLoader(URL_LOADER, null, this);
 
     return rootView;
   }
 
-  @Override public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-    return new CursorLoader(getContext(), ResortProvider.Resorts.CONTENT_URI, null,
-        "name=?", new String[] { mName }, null);
+  @Override public android.support.v4.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
+    return new CursorLoader(getContext(), ResortProvider.Resorts.CONTENT_URI, null, "name=?",
+        new String[] { mName }, null);
   }
 
-  @Override public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
+  @Override public void onLoadFinished(android.support.v4.content.Loader<Cursor> loader, Cursor data) {
+    data.moveToFirst();
+    mConditonTV.setText(data.getString(data.getColumnIndexOrThrow(ResortColums.CONDITIONS)));
   }
 
-  @Override public void onLoaderReset(Loader<Cursor> loader) {
-
+  @Override public void onLoaderReset(android.support.v4.content.Loader<Cursor> loader) {
   }
 }

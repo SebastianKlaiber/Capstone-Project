@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="http://schemas.android.com/apk/res/android">
   <string name="app_name">Snow</string>
   <string name="action_settings">Settings</string>
 
@@ -9,4 +9,10 @@
 
   <!-- TODO: Remove or change this placeholder text -->
   <string name="hello_blank_fragment">Hello blank fragment</string>
+
+  <string name="conditions"><xliff:g id="height">%s</xliff:g>  cm</string>
+  <string name="snow_depth_valley">Snow Depth Valley</string>
+  <string name="snow_depth_mountain">Snow Depth Mountain</string>
+  <string name="snow_conditions">Conditions</string>
+  <string name="new_snow">New Snow</string>
 </resources>
