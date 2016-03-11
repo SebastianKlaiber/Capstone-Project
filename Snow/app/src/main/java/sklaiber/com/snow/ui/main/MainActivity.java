@@ -50,9 +50,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     mRecyclerView.setHasFixedSize(true);
 
     mResortAdapter = new ResortAdapter(getApplicationContext(), mEmptyText, new ResortAdapter.OnClickHandler() {
-      @Override public void onClick(String name, ResortAdapter.ViewHolder vh) {
+      @Override public void onClick(String name, float latitude, float longitude, ResortAdapter.ViewHolder vh) {
         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-        intent.putExtra("name", name);
+        intent.putExtra(getString(R.string.key_intent_name), name);
+        intent.putExtra(getString(R.string.key_intent_latitude), latitude);
+        intent.putExtra(getString(R.string.key_intent_longitude), longitude);
         startActivity(intent);
       }
     });

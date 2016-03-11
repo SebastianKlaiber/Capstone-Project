@@ -10,29 +10,39 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import sklaiber.com.snow.R;
-import sklaiber.com.snow.database.ResortColums;
 import sklaiber.com.snow.database.ResortProvider;
 import timber.log.Timber;
 
 public class DetailActivity extends AppCompatActivity
-    implements OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor> {
+    implements LoaderManager.LoaderCallbacks<Cursor> {
 
   private static final int URL_LOADER = 0;
+  private LatLng latLng;
+
+  @Bind(R.id.mapview) MapView mMapView;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_detail);
 
+    ButterKnife.bind(this);
+
     String name = getIntent().getStringExtra("name");
+
+    float lat = getIntent().getFloatExtra("lat", 0);
+    float longt = getIntent().getFloatExtra("longt", 0);
+    Timber.d("Lat " + String.valueOf(lat));
+    latLng = new LatLng(lat, longt);
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     toolbar.setTitle(name);
@@ -45,11 +55,66 @@ public class DetailActivity extends AppCompatActivity
     ft.replace(R.id.container, DetailFragment.newInstance(name));
     ft.commit();
 
-    SupportMapFragment mapFragment =
-        (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-    mapFragment.getMapAsync(this);
+    mMapView.onCreate(savedInstanceState);
+    mMapView.getMapAsync(new OnMapReadyCallback() {
+      @Override public void onMapReady(GoogleMap googleMap) {
+          float zoomLevel = 13f;
+
+          UiSettings settings = googleMap.getUiSettings();
+          settings.setZoomControlsEnabled(true);
+          settings.setAllGesturesEnabled(true);
+
+          googleMap.moveCamera(
+              CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+          googleMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+      }
+    });
 
     getLoaderManager().initLoader(URL_LOADER, null, this);
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    if (mMapView != null) {
+      mMapView.onResume();
+    }
+  }
+
+  @Override
+  public void onPause() {
+    if (mMapView != null) {
+      mMapView.onPause();
+    }
+    super.onPause();
+  }
+
+  @Override
+  public void onDestroy() {
+    if (mMapView != null) {
+      try {
+        mMapView.onDestroy();
+      } catch (NullPointerException e) {
+        Timber.e("%s Error while attempting MapView.onDestroy(), ignoring exception", e);
+      }
+    }
+    super.onDestroy();
+  }
+
+  @Override
+  public void onLowMemory() {
+    super.onLowMemory();
+    if (mMapView != null) {
+      mMapView.onLowMemory();
+    }
+  }
+
+  @Override
+  public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    if (mMapView != null) {
+      mMapView.onSaveInstanceState(outState);
+    }
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,16 +130,6 @@ public class DetailActivity extends AppCompatActivity
     return super.onOptionsItemSelected(item);
   }
 
-  @Override public void onMapReady(GoogleMap map) {
-    float zoomLevel = 12f;
-    UiSettings settings = map.getUiSettings();
-    settings.setZoomControlsEnabled(true);
-    settings.setAllGesturesEnabled(true);
-    map.moveCamera(
-        CameraUpdateFactory.newLatLngZoom(new LatLng(47.2091904, 11.9637953), zoomLevel));
-    map.addMarker(new MarkerOptions().position(new LatLng(47.2091904, 11.9637953)).title("Marker"));
-  }
-
   @Override public Loader<Cursor> onCreateLoader(int id, Bundle args) {
     String name = getIntent().getStringExtra("name");
     return new CursorLoader(getApplicationContext(), ResortProvider.Resorts.CONTENT_URI, null,
@@ -84,9 +139,6 @@ public class DetailActivity extends AppCompatActivity
   @Override public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
     data.moveToFirst();
     Timber.d(String.valueOf(data.getCount()));
-    Toast.makeText(DetailActivity.this,
-        data.getString(data.getColumnIndex(ResortColums.NAME)) + data.getString(
-            data.getColumnIndex(ResortColums.CONDITIONS)), Toast.LENGTH_SHORT).show();
   }
 
   @Override public void onLoaderReset(Loader<Cursor> loader) {

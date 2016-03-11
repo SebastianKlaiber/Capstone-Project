@@ -36,7 +36,7 @@ public class ResortAdapter extends RecyclerView.Adapter<ResortAdapter.ViewHolder
     @Override public void onClick(View v) {
       int adapterPosition = getAdapterPosition();
       mCursor.moveToPosition(adapterPosition);
-      mOnClickHandler.onClick(mCursor.getString(mCursor.getColumnIndexOrThrow(ResortColums.NAME)), this);
+      mOnClickHandler.onClick(mCursor.getString(mCursor.getColumnIndexOrThrow(ResortColums.NAME)), 47.2268f, 12.0432f, this);
     }
 
   }
@@ -53,7 +53,7 @@ public class ResortAdapter extends RecyclerView.Adapter<ResortAdapter.ViewHolder
   }
 
   public static interface OnClickHandler {
-    void onClick(String name,ViewHolder vh);
+    void onClick(String name, float latitude, float longitude, ViewHolder vh);
   }
 
   public ResortAdapter(Context context, View emptyView, OnClickHandler onClickHandler) {

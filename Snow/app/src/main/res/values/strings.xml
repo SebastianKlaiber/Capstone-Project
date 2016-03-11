@@ -15,4 +15,7 @@
   <string name="snow_depth_mountain">Snow Depth Mountain</string>
   <string name="snow_conditions">Conditions</string>
   <string name="new_snow">New Snow</string>
+  <string name="key_intent_name">name</string>
+  <string name="key_intent_latitude">lat</string>
+  <string name="key_intent_longitude">longt</string>
 </resources>
