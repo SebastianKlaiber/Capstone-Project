@@ -81,7 +81,11 @@
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version"/>
 
-    <activity android:name=".ui.detail.DetailActivity">
+    <activity android:name=".ui.detail.DetailActivity"
+        android:theme="@style/AppTheme.Details">
+      <meta-data
+          android:name="android.support.PARENT_ACTIVITY"
+          android:value=".ui.main.MainActivity" />
     </activity>
   </application>
 
