@@ -46,6 +46,8 @@ dependencies {
   compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
   compile "com.facebook.stetho:stetho:$rootProject.ext.stethoVersion"
   compile "com.facebook.stetho:stetho-urlconnection:$rootProject.ext.stethoVersion"
+  compile 'com.google.android.gms:play-services-maps:8.4.0'
+  compile 'com.google.android.gms:play-services-location:8.4.0'
 
   apt "net.simonvt.schematic:schematic-compiler:$rootProject.ext.schematicVersion"
   compile "net.simonvt.schematic:schematic:$rootProject.ext.schematicVersion"
@@ -84,8 +86,6 @@ dependencies {
   androidTestCompile "com.google.dexmaker:dexmaker:$rootProject.ext.dexmeterVersion"
   androidTestCompile "com.google.dexmaker:dexmaker-mockito:$rootProject.ext.dexmeterVersion"
   androidTestApt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
-  compile 'com.google.android.gms:play-services-maps:8.4.0'
-  compile 'com.android.support:support-v4:23.2.0'
 }
 
 /*

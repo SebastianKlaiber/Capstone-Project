@@ -1,15 +1,29 @@
 package sklaiber.com.snow.ui.detail;
 
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import butterknife.ButterKnife;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import sklaiber.com.snow.R;
+import timber.log.Timber;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements
+    GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+  GoogleApiClient mGoogleApiClient;
+  Location mLastLocation;
+  String name;
+  float lat;
+  float longt;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -17,10 +31,10 @@ public class DetailActivity extends AppCompatActivity {
 
     ButterKnife.bind(this);
 
-    String name = getIntent().getStringExtra(getString(R.string.key_intent_name));
+    name = getIntent().getStringExtra(getString(R.string.key_intent_name));
 
-    float lat = getIntent().getFloatExtra(getString(R.string.key_intent_latitude), 0);
-    float longt = getIntent().getFloatExtra(getString(R.string.key_intent_longitude), 0);
+    lat = getIntent().getFloatExtra(getString(R.string.key_intent_latitude), 0);
+    longt = getIntent().getFloatExtra(getString(R.string.key_intent_longitude), 0);
 
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     toolbar.setTitle(name);
@@ -29,9 +43,27 @@ public class DetailActivity extends AppCompatActivity {
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-    ft.replace(R.id.container, DetailFragment.newInstance(name, lat, longt));
-    ft.commit();
+    if (mGoogleApiClient == null) {
+      mGoogleApiClient = new GoogleApiClient.Builder(this)
+          .addConnectionCallbacks(this)
+          .addOnConnectionFailedListener(this)
+          .addApi(LocationServices.API)
+          .build();
+    }
+
+    //FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+    //ft.replace(R.id.container, DetailFragment.newInstance(name, lat, longt));
+    //ft.commit();
+  }
+
+  @Override protected void onStart() {
+    mGoogleApiClient.connect();
+    super.onStart();
+  }
+
+  @Override protected void onStop() {
+    mGoogleApiClient.disconnect();
+    super.onStop();
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,5 +77,24 @@ public class DetailActivity extends AppCompatActivity {
         return true;
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  @Override public void onConnected(@Nullable Bundle bundle) {
+    mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+        mGoogleApiClient);
+    if (mLastLocation != null) {
+      FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+      ft.replace(R.id.container, DetailFragment.newInstance(name, lat, longt,
+          mLastLocation.getLatitude(), mLastLocation.getLongitude()));
+      ft.commit();
+    }
+  }
+
+  @Override public void onConnectionSuspended(int i) {
+    Timber.d("Suspended");
+  }
+
+  @Override public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    Timber.d(connectionResult.getErrorMessage());
   }
 }

@@ -40,12 +40,24 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     // Required empty public constructor
   }
 
-  public static DetailFragment newInstance(String name, float lat, float longt) {
+  public static DetailFragment newInstance(String name, float resortLat, float resortLong) {
     DetailFragment detailFragment = new DetailFragment();
     Bundle args = new Bundle();
     args.putString("name", name);
-    args.putFloat("lat", lat);
-    args.putFloat("longt", longt);
+    args.putFloat("resortLat", resortLat);
+    args.putFloat("resortLong", resortLong);
+    detailFragment.setArguments(args);
+    return detailFragment;
+  }
+
+  public static DetailFragment newInstance(String name, float resortLat, float resortLong, double personLat, double personLong) {
+    DetailFragment detailFragment = new DetailFragment();
+    Bundle args = new Bundle();
+    args.putString("name", name);
+    args.putFloat("resortLat", resortLat);
+    args.putFloat("resortLong", resortLong);
+    args.putDouble("personLat", personLat);
+    args.putDouble("personLong", personLong);
     detailFragment.setArguments(args);
     return detailFragment;
   }
@@ -53,8 +65,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mName = getArguments().getString(getString(R.string.key_intent_name));
-    latLng = new LatLng(getArguments().getFloat("lat"),
-        getArguments().getFloat("longt"));
+    latLng = new LatLng(getArguments().getFloat("resortLat"),
+        getArguments().getFloat("resortLong"));
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,15 +79,18 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     mMapView.onCreate(savedInstanceState);
     mMapView.getMapAsync(new OnMapReadyCallback() {
       @Override public void onMapReady(GoogleMap googleMap) {
-        float zoomLevel = 13f;
+        float zoomLevel = 12f;
 
         UiSettings settings = googleMap.getUiSettings();
         settings.setZoomControlsEnabled(true);
         settings.setAllGesturesEnabled(true);
+        settings.setMyLocationButtonEnabled(true);
+        settings.setMapToolbarEnabled(true);
 
         googleMap.moveCamera(
             CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
-        googleMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+        googleMap.addMarker(new MarkerOptions().position(latLng).title(mName));
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(getArguments().getDouble("personLat"), getArguments().getDouble("personLong"))));
       }
     });
 
