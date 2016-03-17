@@ -30,12 +30,6 @@
       android:orientation="vertical"
       >
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapview"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        />
-
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"

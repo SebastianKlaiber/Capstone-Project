@@ -12,9 +12,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import sklaiber.com.snow.R;
 import sklaiber.com.snow.database.ResortColums;
 import sklaiber.com.snow.database.ResortProvider;
+import timber.log.Timber;
 
 public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -22,26 +30,31 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
   @Bind(R.id.new_snow_tv) TextView mNewSnowTV;
   @Bind(R.id.snow_mountain_tv) TextView mSnowMountainTV;
   @Bind(R.id.snow_valley) TextView mSnowValleyTV;
+  @Bind(R.id.mapview) MapView mMapView;
 
   private static final int URL_LOADER = 0;
-
+  private LatLng latLng;
   private String mName;
 
   public DetailFragment() {
     // Required empty public constructor
   }
 
-  public static DetailFragment newInstance(String name) {
+  public static DetailFragment newInstance(String name, float lat, float longt) {
     DetailFragment detailFragment = new DetailFragment();
     Bundle args = new Bundle();
     args.putString("name", name);
+    args.putFloat("lat", lat);
+    args.putFloat("longt", longt);
     detailFragment.setArguments(args);
     return detailFragment;
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    mName = getArguments().getString("name");
+    mName = getArguments().getString(getString(R.string.key_intent_name));
+    latLng = new LatLng(getArguments().getFloat("lat"),
+        getArguments().getFloat("longt"));
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,9 +64,68 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     ButterKnife.bind(this, rootView);
 
+    mMapView.onCreate(savedInstanceState);
+    mMapView.getMapAsync(new OnMapReadyCallback() {
+      @Override public void onMapReady(GoogleMap googleMap) {
+        float zoomLevel = 13f;
+
+        UiSettings settings = googleMap.getUiSettings();
+        settings.setZoomControlsEnabled(true);
+        settings.setAllGesturesEnabled(true);
+
+        googleMap.moveCamera(
+            CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+        googleMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+      }
+    });
+
     getLoaderManager().initLoader(URL_LOADER, null, this);
 
     return rootView;
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    if (mMapView != null) {
+      mMapView.onResume();
+    }
+  }
+
+  @Override
+  public void onPause() {
+    if (mMapView != null) {
+      mMapView.onPause();
+    }
+    super.onPause();
+  }
+
+  @Override
+  public void onDestroy() {
+    if (mMapView != null) {
+      try {
+        mMapView.onDestroy();
+      } catch (NullPointerException e) {
+        Timber.e(e, "Error while attempting MapView.onDestroy(), ignoring exception");
+      }
+    }
+    super.onDestroy();
+  }
+
+  @Override
+  public void onLowMemory() {
+    super.onLowMemory();
+    if (mMapView != null) {
+      mMapView.onLowMemory();
+    }
+  }
+
+  @Override
+  public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    if (mMapView != null) {
+      mMapView.onSaveInstanceState(outState);
+    }
   }
 
   @Override public android.support.v4.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
