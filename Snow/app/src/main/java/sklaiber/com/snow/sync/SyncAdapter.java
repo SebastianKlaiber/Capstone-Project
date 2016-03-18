@@ -30,6 +30,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
   @Inject ResortService resortService;
 
+  public static final String ACTION_DATA_UPDATED =
+      "com.example.android.sunshine.app.ACTION_DATA_UPDATED";
+
   // Interval at which to sync with the weather, in seconds.
   // 60 seconds (1 minute) * 180 = 3 hours
   public static final int SYNC_INTERVAL = 60 * 180;

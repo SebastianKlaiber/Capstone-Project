@@ -41,11 +41,10 @@ public class WidgetIntentService extends IntentService {
 
     for (int appWidgetId : appWidgetIds) {
       RemoteViews views = new RemoteViews(this.getPackageName(), R.layout.widget);
-      views.setTextViewText(R.id.widget_resort_tv,
-          cursor.getString(cursor.getColumnIndexOrThrow(ResortColums.NAME)));
-      views.setTextViewText(R.id.widget_conditions_tv,
+      views.setTextViewText(R.id.widget_resort, cursor.getString(cursor.getColumnIndexOrThrow(ResortColums.NAME)));
+      views.setTextViewText(R.id.widget_conditions,
           cursor.getString(cursor.getColumnIndexOrThrow(ResortColums.CONDITIONS)));
-      views.setTextViewText(R.id.widget_new_snow_tv, getString(R.string.snow,
+      views.setTextViewText(R.id.widget_new_snow, getString(R.string.snow,
           cursor.getString(cursor.getColumnIndexOrThrow(ResortColums.NEW_SNOW))));
 
       Intent launchIntent = new Intent(this, MainActivity.class);

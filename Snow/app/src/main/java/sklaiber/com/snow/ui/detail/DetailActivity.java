@@ -50,10 +50,6 @@ public class DetailActivity extends AppCompatActivity implements
           .addApi(LocationServices.API)
           .build();
     }
-
-    //FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-    //ft.replace(R.id.container, DetailFragment.newInstance(name, lat, longt));
-    //ft.commit();
   }
 
   @Override protected void onStart() {
@@ -86,6 +82,10 @@ public class DetailActivity extends AppCompatActivity implements
       FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
       ft.replace(R.id.container, DetailFragment.newInstance(name, lat, longt,
           mLastLocation.getLatitude(), mLastLocation.getLongitude()));
+      ft.commit();
+    } else {
+      FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+      ft.replace(R.id.container, DetailFragment.newInstance(name, lat, longt));
       ft.commit();
     }
   }

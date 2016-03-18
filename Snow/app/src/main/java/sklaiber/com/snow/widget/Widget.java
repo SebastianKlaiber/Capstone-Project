@@ -5,10 +5,9 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import sklaiber.com.snow.sync.SyncAdapter;
 
-/**
- * Created by sklaiber on 18.03.16.
- */
 public class Widget extends AppWidgetProvider {
   @Override
   public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -19,5 +18,13 @@ public class Widget extends AppWidgetProvider {
   public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,
       int appWidgetId, Bundle newOptions) {
     context.startService(new Intent(context, WidgetIntentService.class));
+  }
+
+  @Override
+  public void onReceive(@NonNull Context context, @NonNull Intent intent) {
+    super.onReceive(context, intent);
+    if (SyncAdapter.ACTION_DATA_UPDATED.equals(intent.getAction())) {
+      context.startService(new Intent(context, WidgetIntentService.class));
+    }
   }
 }

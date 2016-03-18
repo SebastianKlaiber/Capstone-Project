@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,8 +42,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     toolbar.setTitle(getString(R.string.app_name));
     setSupportActionBar(toolbar);
-
-    SyncAdapter.initializeSyncAdapter(this);
 
     mSwipeRefresh.setOnRefreshListener(this);
     mSwipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
@@ -92,8 +89,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
   private void updateEmptyView() {
     if ( mResortAdapter.getItemCount() == 0 ) {
       if ( null != mEmptyText ) {
-        mEmptyText.setVisibility(View.VISIBLE);
-        mRecyclerView.setVisibility(View.GONE);
         mEmptyText.setText(R.string.empty_resort_list);
       }
     }

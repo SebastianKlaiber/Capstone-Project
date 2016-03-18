@@ -1,67 +1,59 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical"
     >
 
-  <FrameLayout
+  <RelativeLayout
       android:id="@+id/widget"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/abc_action_bar_default_height_material"
-      android:background="@color/colorPrimary"
-      >
+      android:layout_height="match_parent"
+      android:background="@android:color/white"
+      android:padding="8dp">
+
     <ImageView
-        android:layout_width="wrap_content"
+        android:id="@+id/widget_icon"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_launcher"
-        />
-  </FrameLayout>
+        android:background="@color/colorPrimary"
+        android:src="@mipmap/ic_launcher" />
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:contentDescription="@string/app_name"
-      android:orientation="vertical"
-      >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/widget_icon"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/widget_resort_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:contentDescription="@string/app_name"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        />
+      <TextView
+          android:id="@+id/widget_resort"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:fontFamily="sans-serif"
+          android:textAppearance="?android:textAppearanceLarge"
+          android:textColor="@android:color/black"
+          tools:text="Gerlos" />
 
-    <TextView
-        android:id="@+id/widget_conditions_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:contentDescription="@string/app_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        />
+      <TextView
+          android:id="@+id/widget_conditions"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:fontFamily="sans-serif"
+          android:textAppearance="?android:textAppearanceLarge"
+          android:textColor="@android:color/black"
+          tools:text="good" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="New Snow:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        />
-    <TextView
-        android:id="@+id/widget_new_snow_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:contentDescription="@string/app_name"
-        android:ellipsize="end"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-          />
-  </LinearLayout>
-</LinearLayout>
+      <TextView
+          android:id="@+id/widget_new_snow"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:fontFamily="sans-serif"
+          android:textAppearance="?android:textAppearanceLarge"
+          android:textColor="@android:color/black"
+          tools:text="10cm" />
+    </LinearLayout>
+  </RelativeLayout>
+</FrameLayout>
