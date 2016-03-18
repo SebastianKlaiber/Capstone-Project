@@ -86,6 +86,17 @@
           android:resource="@xml/syncadapter"/>
     </service>
 
+    <receiver android:name=".widget.Widget">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+      </intent-filter>
+
+      <meta-data
+          android:name="android.appwidget.provider"
+          android:resource="@xml/widget" />
+    </receiver>
+    <service android:name=".widget.WidgetIntentService" />
+
     <meta-data
         android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyAMbXzMl9VAAKr-7DUKXEZodqBeMyq1XTM"/>
