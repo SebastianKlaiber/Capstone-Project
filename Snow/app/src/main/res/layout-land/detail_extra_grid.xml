@@ -1,0 +1,92 @@
+<android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_additional_pane"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:paddingBottom="@dimen/abc_list_item_padding_horizontal_material"
+    android:background="@color/detail_accent_pane_background"
+    android:paddingEnd="@dimen/forecast_detail_horizontal_padding"
+    android:paddingLeft="@dimen/forecast_detail_horizontal_padding"
+    android:paddingRight="@dimen/forecast_detail_horizontal_padding"
+    android:paddingStart="@dimen/forecast_detail_horizontal_padding"
+    android:paddingTop="48dp"
+    app:columnCount="1">
+
+  <TextView
+      android:id="@+id/detail_new_label_snow_tv"
+      android:layout_height="wrap_content"
+      android:fontFamily="sans-serif"
+      android:gravity="center_vertical"
+      android:text="@string/new_snow"
+      android:textAppearance="@style/TextAppearance.AppCompat.Title"
+      android:textColor="@color/detail_accent_label"
+      app:layout_columnWeight="1"
+      app:layout_gravity="fill"
+      app:layout_rowWeight="1" />
+
+  <TextView
+      android:id="@+id/detail_new_snow_textview"
+      android:gravity="center_vertical"
+      android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+      android:textColor="@android:color/white"
+      app:layout_gravity="fill"
+      tools:text="10cm" />
+
+  <TextView
+      android:id="@+id/detail_snow_conditions_label_tv"
+      android:fontFamily="sans-serif"
+      android:gravity="center_vertical"
+      android:text="@string/snow_conditions"
+      android:textAppearance="@style/TextAppearance.AppCompat.Title"
+      android:textColor="@color/detail_accent_label"
+      app:layout_gravity="fill"
+      app:layout_rowWeight="1" />
+
+  <TextView
+      android:id="@+id/detail_snow_conditions_textview"
+      android:gravity="center_vertical"
+      android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+      android:textColor="@android:color/white"
+      app:layout_gravity="fill"
+      tools:text="good" />
+
+  <TextView
+      android:id="@+id/detail_snow_mountain_label_textview"
+      android:fontFamily="sans-serif"
+      android:gravity="center_vertical"
+      android:text="@string/snow_depth_mountain"
+      android:textColor="@color/detail_accent_label"
+      android:textSize="20sp"
+      app:layout_gravity="fill"
+      app:layout_rowWeight="1" />
+
+
+  <TextView
+      android:id="@+id/detail_snow_mountain_textview"
+      android:gravity="center_vertical"
+      android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+      android:textColor="@android:color/white"
+      app:layout_gravity="fill"
+      tools:text="100cm" />
+
+  <TextView
+      android:id="@+id/detail_snow_valley_label_textview"
+      android:fontFamily="sans-serif"
+      android:gravity="center_vertical"
+      android:text="@string/snow_depth_valley"
+      android:textColor="@color/detail_accent_label"
+      android:textSize="20sp"
+      app:layout_gravity="fill"
+      app:layout_rowWeight="1" />
+
+
+  <TextView
+      android:id="@+id/detail_snow_valley_textview"
+      android:gravity="center_vertical"
+      android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+      android:textColor="@android:color/white"
+      app:layout_gravity="fill"
+      tools:text="10cm" />
+</android.support.v7.widget.GridLayout>
