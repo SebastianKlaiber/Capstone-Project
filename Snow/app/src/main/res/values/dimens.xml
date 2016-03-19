@@ -10,4 +10,5 @@
   <dimen name="widget_min_resize_height">@dimen/widget_default_height</dimen>
   <dimen name="widget_large_width">220dp</dimen>
 
+  <dimen name="forecast_detail_horizontal_padding">32dp</dimen>
 </resources>

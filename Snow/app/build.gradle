@@ -39,6 +39,7 @@ dependencies {
   compile "com.android.support:design:$rootProject.ext.supportLibraryVersion"
   compile "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
   compile "com.android.support:support-v4:$rootProject.ext.supportLibraryVersion"
+  compile "com.android.support:gridlayout-v7:$rootProject.ext.supportLibraryVersion"
   compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
   compile "com.google.code.gson:gson:$rootProject.ext.gsonVersion"
   compile "com.squareup.retrofit:converter-gson:$rootProject.ext.gsonConverterVersion"

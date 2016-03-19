@@ -58,7 +58,7 @@ public class InfoFragment extends DialogFragment
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    getDialog().setTitle("Info");
+    getDialog().setTitle(R.string.title_info_fragment);
   }
 
   @Override public void onResume() {

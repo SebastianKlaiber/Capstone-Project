@@ -26,10 +26,10 @@ import timber.log.Timber;
 
 public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-  @Bind(R.id.snow_conditions_tv) TextView mConditonTV;
-  @Bind(R.id.new_snow_tv) TextView mNewSnowTV;
-  @Bind(R.id.snow_mountain_tv) TextView mSnowMountainTV;
-  @Bind(R.id.snow_valley) TextView mSnowValleyTV;
+  @Bind(R.id.detail_snow_conditions_textview) TextView mConditonTV;
+  @Bind(R.id.detail_new_snow_textview) TextView mNewSnowTV;
+  @Bind(R.id.detail_snow_mountain_textview) TextView mSnowMountainTV;
+  @Bind(R.id.detail_snow_valley_textview) TextView mSnowValleyTV;
   @Bind(R.id.mapview) MapView mMapView;
 
   private static final int URL_LOADER = 0;

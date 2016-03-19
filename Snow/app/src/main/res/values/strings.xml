@@ -18,4 +18,6 @@
   <string name="key_intent_name">name</string>
   <string name="key_intent_latitude">lat</string>
   <string name="key_intent_longitude">longt</string>
+  <string name="action_info">Info</string>
+  <string name="title_info_fragment">Ski Resort Infos</string>
 </resources>

@@ -15,7 +15,7 @@
   </slide>
   <slide android:slideEdge="right">
     <targets>
-      <target android:targetId="@id/container" />
+      <target android:targetId="@id/detail_fragment_container" />
     </targets>
   </slide>
 
