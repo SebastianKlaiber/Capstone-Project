@@ -1,5 +1,6 @@
 package sklaiber.com.snow.ui.detail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -34,10 +35,10 @@ public class InfoFragment extends DialogFragment
   public InfoFragment() {
   }
 
-  public static InfoFragment newInstance(String name) {
+  public static InfoFragment newInstance(Context context, String name) {
     InfoFragment infoFragment = new InfoFragment();
     Bundle args = new Bundle();
-    args.putString("name", name);
+    args.putString(context.getString(R.string.info_fragment_name_key), name);
     infoFragment.setArguments(args);
     return infoFragment;
   }
@@ -73,20 +74,20 @@ public class InfoFragment extends DialogFragment
     switch (v.getId()) {
       case R.id.info_homepage_layout:
         Intent homepage = new Intent(Intent.ACTION_VIEW);
-        homepage.setData(Uri.parse("http://" + mHomepageTv.getText().toString()));
+        homepage.setData(Uri.parse(getString(R.string.hompage_intent_prefix) + mHomepageTv.getText().toString()));
         startActivity(homepage);
         break;
       case R.id.info_phone_number_layout:
         Intent intent = new Intent(Intent.ACTION_CALL);
-        intent.setData(Uri.parse("tel:" + mPhoneNumberTv.getText().toString()));
+        intent.setData(Uri.parse(getString(R.string.tel_intent_prefix) + mPhoneNumberTv.getText().toString()));
         startActivity(intent);
         break;
     }
   }
 
   @Override public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-    return new CursorLoader(getContext(), ResortProvider.Resorts.CONTENT_URI, null, "name=?",
-        new String[] { getArguments().getString("name") }, null);
+    return new CursorLoader(getContext(), ResortProvider.Resorts.CONTENT_URI, null, getString(R.string.detail_fragment_where_clause),
+        new String[] { getArguments().getString(getString(R.string.info_fragment_name_key)) }, null);
   }
 
   @Override public void onLoadFinished(Loader<Cursor> loader, Cursor data) {

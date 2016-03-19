@@ -17,7 +17,8 @@ import com.google.android.gms.location.LocationServices;
 import sklaiber.com.snow.R;
 import timber.log.Timber;
 
-public class DetailActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class DetailActivity extends AppCompatActivity
+    implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
   GoogleApiClient mGoogleApiClient;
   Location mLastLocation;
@@ -44,8 +45,7 @@ public class DetailActivity extends AppCompatActivity implements GoogleApiClient
     getSupportActionBar().setDisplayShowHomeEnabled(true);
 
     if (mGoogleApiClient == null) {
-      mGoogleApiClient = new GoogleApiClient.Builder(this)
-          .addConnectionCallbacks(this)
+      mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this)
           .addOnConnectionFailedListener(this)
           .addApi(LocationServices.API)
           .build();
@@ -74,23 +74,24 @@ public class DetailActivity extends AppCompatActivity implements GoogleApiClient
         return true;
       case R.id.action_info:
         FragmentManager fm = getSupportFragmentManager();
-        InfoFragment infoFragment = InfoFragment.newInstance(name);
+        InfoFragment infoFragment = InfoFragment.newInstance(getApplicationContext(), name);
         infoFragment.show(fm, "fragment_info");
     }
     return super.onOptionsItemSelected(item);
   }
 
   @Override public void onConnected(@Nullable Bundle bundle) {
-    mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-        mGoogleApiClient);
+    mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
     if (mLastLocation != null) {
       FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-      ft.replace(R.id.detail_fragment_container, DetailFragment.newInstance(name, lat, longt,
-          mLastLocation.getLatitude(), mLastLocation.getLongitude()));
+      ft.replace(R.id.detail_fragment_container,
+          DetailFragment.newInstance(getApplicationContext(), name, lat, longt,
+              mLastLocation.getLatitude(), mLastLocation.getLongitude()));
       ft.commit();
     } else {
       FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-      ft.replace(R.id.detail_fragment_container, DetailFragment.newInstance(name, lat, longt));
+      ft.replace(R.id.detail_fragment_container,
+          DetailFragment.newInstance(getApplicationContext(), name, lat, longt));
       ft.commit();
     }
   }

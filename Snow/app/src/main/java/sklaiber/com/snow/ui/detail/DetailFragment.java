@@ -1,5 +1,6 @@
 package sklaiber.com.snow.ui.detail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -44,24 +45,26 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     // Required empty public constructor
   }
 
-  public static DetailFragment newInstance(String name, float resortLat, float resortLong) {
+  public static DetailFragment newInstance(Context context, String name, float resortLat,
+      float resortLong) {
     DetailFragment detailFragment = new DetailFragment();
     Bundle args = new Bundle();
-    args.putString("name", name);
-    args.putFloat("resortLat", resortLat);
-    args.putFloat("resortLong", resortLong);
+    args.putString(context.getString(R.string.detail_fragment_name_key), name);
+    args.putFloat(context.getString(R.string.detail_fragment_resort_lat_key), resortLat);
+    args.putFloat(context.getString(R.string.detail_fragment_resort_longt_key), resortLong);
     detailFragment.setArguments(args);
     return detailFragment;
   }
 
-  public static DetailFragment newInstance(String name, float resortLat, float resortLong, double personLat, double personLong) {
+  public static DetailFragment newInstance(Context context, String name, float resortLat,
+      float resortLong, double personLat, double personLong) {
     DetailFragment detailFragment = new DetailFragment();
     Bundle args = new Bundle();
-    args.putString("name", name);
-    args.putFloat("resortLat", resortLat);
-    args.putFloat("resortLong", resortLong);
-    args.putDouble("personLat", personLat);
-    args.putDouble("personLong", personLong);
+    args.putString(context.getString(R.string.detail_fragment_name_key), name);
+    args.putFloat(context.getString(R.string.detail_fragment_resort_lat_key), resortLat);
+    args.putFloat(context.getString(R.string.detail_fragment_resort_longt_key), resortLong);
+    args.putDouble(context.getString(R.string.detail_fragment_person_lat_key), personLat);
+    args.putDouble(context.getString(R.string.detail_fragment_person_longt_key), personLong);
     detailFragment.setArguments(args);
     return detailFragment;
   }
@@ -69,8 +72,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mName = getArguments().getString(getString(R.string.key_intent_name));
-    latLng = new LatLng(getArguments().getFloat("resortLat"),
-        getArguments().getFloat("resortLong"));
+    latLng = new LatLng(getArguments().getFloat(getString(R.string.detail_fragment_resort_lat_key)),
+        getArguments().getFloat(getString(R.string.detail_fragment_resort_longt_key)));
     setHasOptionsMenu(true);
   }
 
@@ -92,10 +95,11 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         settings.setMyLocationButtonEnabled(true);
         settings.setMapToolbarEnabled(true);
 
-        googleMap.moveCamera(
-            CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
         googleMap.addMarker(new MarkerOptions().position(latLng).title(mName));
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(getArguments().getDouble("personLat"), getArguments().getDouble("personLong"))));
+        googleMap.addMarker(new MarkerOptions().position(
+            new LatLng(getArguments().getDouble(getString(R.string.detail_fragment_person_lat_key)),
+                getArguments().getDouble(getString(R.string.detail_fragment_person_longt_key)))));
       }
     });
 
@@ -110,9 +114,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     menuItem.setIntent(createShareForecastIntent());
   }
 
-  @Override
-  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    if ( getActivity() instanceof DetailActivity ){
+  @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    if (getActivity() instanceof DetailActivity) {
       // Inflate the menu; this adds items to the action bar if it is present.
       inflater.inflate(R.menu.detailfragment, menu);
       finishCreatingMenu(menu);
@@ -132,44 +135,39 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     return shareIntent;
   }
 
-  @Override
-  public void onResume() {
+  @Override public void onResume() {
     super.onResume();
     if (mMapView != null) {
       mMapView.onResume();
     }
   }
 
-  @Override
-  public void onPause() {
+  @Override public void onPause() {
     if (mMapView != null) {
       mMapView.onPause();
     }
     super.onPause();
   }
 
-  @Override
-  public void onDestroy() {
+  @Override public void onDestroy() {
     if (mMapView != null) {
       try {
         mMapView.onDestroy();
       } catch (NullPointerException e) {
-        Timber.e(e, "Error while attempting MapView.onDestroy(), ignoring exception");
+        Timber.e(e, getString(R.string.mapview_destroy_error_message));
       }
     }
     super.onDestroy();
   }
 
-  @Override
-  public void onLowMemory() {
+  @Override public void onLowMemory() {
     super.onLowMemory();
     if (mMapView != null) {
       mMapView.onLowMemory();
     }
   }
 
-  @Override
-  public void onSaveInstanceState(Bundle outState) {
+  @Override public void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
     if (mMapView != null) {
       mMapView.onSaveInstanceState(outState);
@@ -177,16 +175,20 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
   }
 
   @Override public android.support.v4.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
-    return new CursorLoader(getContext(), ResortProvider.Resorts.CONTENT_URI, null, "name=?",
-        new String[] { mName }, null);
+    return new CursorLoader(getContext(), ResortProvider.Resorts.CONTENT_URI, null,
+        getString(R.string.detail_fragment_where_clause), new String[] { mName }, null);
   }
 
-  @Override public void onLoadFinished(android.support.v4.content.Loader<Cursor> loader, Cursor data) {
+  @Override
+  public void onLoadFinished(android.support.v4.content.Loader<Cursor> loader, Cursor data) {
     data.moveToFirst();
     mConditonTV.setText(data.getString(data.getColumnIndexOrThrow(ResortColums.CONDITIONS)));
-    mNewSnowTV.setText(getString(R.string.snow, data.getString(data.getColumnIndexOrThrow(ResortColums.NEW_SNOW))));
-    mSnowMountainTV.setText(getString(R.string.snow, data.getString(data.getColumnIndexOrThrow(ResortColums.SNOW_MOUNTAIN))));
-    mSnowValleyTV.setText(getString(R.string.snow, data.getString(data.getColumnIndexOrThrow(ResortColums.SNOW_VALLEY))));
+    mNewSnowTV.setText(getString(R.string.snow,
+        data.getString(data.getColumnIndexOrThrow(ResortColums.NEW_SNOW))));
+    mSnowMountainTV.setText(getString(R.string.snow,
+        data.getString(data.getColumnIndexOrThrow(ResortColums.SNOW_MOUNTAIN))));
+    mSnowValleyTV.setText(getString(R.string.snow,
+        data.getString(data.getColumnIndexOrThrow(ResortColums.SNOW_VALLEY))));
   }
 
   @Override public void onLoaderReset(android.support.v4.content.Loader<Cursor> loader) {

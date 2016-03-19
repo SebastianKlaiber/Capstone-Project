@@ -21,4 +21,14 @@
   <string name="action_info">Info</string>
   <string name="title_info_fragment">Ski Resort Infos</string>
   <string name="action_share">Share</string>
+  <string name="detail_fragment_resort_lat_key">resortLat</string>
+  <string name="detail_fragment_name_key">name</string>
+  <string name="detail_fragment_resort_longt_key">resortLong</string>
+  <string name="detail_fragment_person_lat_key">personLat</string>
+  <string name="detail_fragment_person_longt_key">personLong</string>
+  <string name="mapview_destroy_error_message">Error while attempting MapView.onDestroy(), ignoring exception</string>
+  <string name="detail_fragment_where_clause">name=?</string>
+  <string name="hompage_intent_prefix">http://</string>
+  <string name="tel_intent_prefix">tel:</string>
+  <string name="info_fragment_name_key">name</string>
 </resources>
