@@ -20,4 +20,5 @@
   <string name="key_intent_longitude">longt</string>
   <string name="action_info">Info</string>
   <string name="title_info_fragment">Ski Resort Infos</string>
+  <string name="action_share">Share</string>
 </resources>

@@ -1,5 +1,6 @@
 package sklaiber.com.snow.ui.detail;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -67,6 +71,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     mName = getArguments().getString(getString(R.string.key_intent_name));
     latLng = new LatLng(getArguments().getFloat("resortLat"),
         getArguments().getFloat("resortLong"));
+    setHasOptionsMenu(true);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,6 +102,34 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     getLoaderManager().initLoader(URL_LOADER, null, this);
 
     return rootView;
+  }
+
+  private void finishCreatingMenu(Menu menu) {
+    // Retrieve the share menu item
+    MenuItem menuItem = menu.findItem(R.id.action_share);
+    menuItem.setIntent(createShareForecastIntent());
+  }
+
+  @Override
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    if ( getActivity() instanceof DetailActivity ){
+      // Inflate the menu; this adds items to the action bar if it is present.
+      inflater.inflate(R.menu.detailfragment, menu);
+      finishCreatingMenu(menu);
+    }
+  }
+
+  private Intent createShareForecastIntent() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(mName);
+    sb.append(mConditonTV.getText().toString());
+    sb.append(mNewSnowTV.getText().toString());
+
+    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+    shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+    shareIntent.setType("text/plain");
+    shareIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+    return shareIntent;
   }
 
   @Override
