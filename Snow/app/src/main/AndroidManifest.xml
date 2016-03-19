@@ -88,6 +88,8 @@
           android:resource="@xml/syncadapter"/>
     </service>
 
+    <service android:name=".GeofenceTransitionsIntentService" />
+
     <receiver android:name=".widget.Widget">
       <intent-filter>
         <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
