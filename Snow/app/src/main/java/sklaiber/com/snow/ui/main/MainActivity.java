@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import javax.inject.Inject;
 import sklaiber.com.snow.R;
 import sklaiber.com.snow.database.ResortProvider;
 import sklaiber.com.snow.sync.SyncAdapter;
@@ -23,8 +22,6 @@ import sklaiber.com.snow.ui.detail.DetailActivity;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
     SwipeRefreshLayout.OnRefreshListener{
-
-  @Inject MainContract.UserActionListener mMainPresenter;
 
   @Bind(R.id.recyclerview_resort) RecyclerView mRecyclerView;
   @Bind(R.id.recyclerview_resort_empty) TextView mEmptyText;

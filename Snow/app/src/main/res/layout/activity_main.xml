@@ -33,10 +33,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="?actionBarSize"
         >
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          >
       <android.support.v7.widget.RecyclerView
           android:id="@+id/recyclerview_resort"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior"
           />
 
       <!-- empty list -->
@@ -55,7 +60,7 @@
           app:layout_anchor="@+id/recyclerview_resort"
           app:layout_anchorGravity="fill"
           />
+      </FrameLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
-
   </android.support.design.widget.CoordinatorLayout>
 </FrameLayout>

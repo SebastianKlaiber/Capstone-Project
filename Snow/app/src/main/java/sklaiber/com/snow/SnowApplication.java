@@ -9,9 +9,6 @@ import sklaiber.com.snow.di.modules.AppModule;
 import sklaiber.com.snow.sync.SyncAdapter;
 import timber.log.Timber;
 
-/**
- * Created by skipj on 11.01.2016.
- */
 public class SnowApplication extends Application {
 
   private AppComponent appComponent;
@@ -25,16 +22,15 @@ public class SnowApplication extends Application {
           return super.createStackElementTag(element) + ':' + element.getLineNumber();
         }
       });
+
+      Stetho.initialize(Stetho.newInitializerBuilder(this)
+          .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+          .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+          .build());
     }
+    SyncAdapter.initializeSyncAdapter(this);
 
     appComponent = createAppComponent();
-
-    Stetho.initialize(Stetho.newInitializerBuilder(this)
-        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
-        .build());
-
-    SyncAdapter.initializeSyncAdapter(this);
   }
 
   public AppComponent createAppComponent() {
