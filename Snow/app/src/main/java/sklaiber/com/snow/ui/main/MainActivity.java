@@ -14,11 +14,14 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import sklaiber.com.snow.R;
 import sklaiber.com.snow.database.ResortProvider;
 import sklaiber.com.snow.sync.SyncAdapter;
 import sklaiber.com.snow.ui.adapter.ResortAdapter;
 import sklaiber.com.snow.ui.detail.DetailActivity;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
     SwipeRefreshLayout.OnRefreshListener{
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
   @Bind(R.id.swipe_to_refresh) SwipeRefreshLayout mSwipeRefresh;
   @Bind(R.id.toolbar) Toolbar toolbar;
 
+  private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
   private static final int URL_LOADER = 0;
   private ResortAdapter mResortAdapter;
 
@@ -59,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     });
 
     mRecyclerView.setAdapter(mResortAdapter);
+
+    checkPlayServices();
   }
 
   @Override protected void onResume() {
@@ -89,5 +95,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mEmptyText.setText(R.string.empty_resort_list);
       }
     }
+  }
+
+  private boolean checkPlayServices() {
+    GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+    int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+    if (resultCode != ConnectionResult.SUCCESS) {
+      if (apiAvailability.isUserResolvableError(resultCode)) {
+        apiAvailability.getErrorDialog(this, resultCode,
+            PLAY_SERVICES_RESOLUTION_REQUEST).show();
+      } else {
+        Timber.i("This device is not supported.");
+        finish();
+      }
+      return false;
+    }
+    return true;
   }
 }
