@@ -18,6 +18,7 @@ public class Constants {
 
   public static final HashMap<String, LatLng> RESORT_LANDMARKS = new HashMap<String, LatLng>();
   static {
-    RESORT_LANDMARKS.put("HOME", new LatLng(48.158761, 11.566009));
+    RESORT_LANDMARKS.put("GERLOS", new LatLng(47.228195, 12.049626));
+    RESORT_LANDMARKS.put("ALPBACH", new LatLng(47.373723, 11.959354));
   }
 }
