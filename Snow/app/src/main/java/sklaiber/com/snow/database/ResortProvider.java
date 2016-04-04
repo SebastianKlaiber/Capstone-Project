@@ -9,7 +9,7 @@ import net.simonvt.schematic.annotation.TableEndpoint;
 @ContentProvider(authority = ResortProvider.AUTHORITY, database = ResortDatabase.class)
 public class ResortProvider {
   public static final String AUTHORITY = "sklaiber.com.snow";
-  public static Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
+  public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
   interface Path {
     String RESORTS = "resorts";

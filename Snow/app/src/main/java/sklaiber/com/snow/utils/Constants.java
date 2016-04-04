@@ -4,7 +4,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.HashMap;
 
 public class Constants {
-  public static String BASE_URL = "https://ambient-tuner-123915.appspot.com";
+  public static final String BASE_URL = "https://ambient-tuner-123915.appspot.com";
 
   public static final String PACKAGE_NAME = "sklaiber.com.snow";
 

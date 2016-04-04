@@ -24,14 +24,14 @@ import sklaiber.com.snow.ui.detail.DetailActivity;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
-    SwipeRefreshLayout.OnRefreshListener{
+    SwipeRefreshLayout.OnRefreshListener {
 
   @Bind(R.id.recyclerview_resort) RecyclerView mRecyclerView;
   @Bind(R.id.recyclerview_resort_empty) TextView mEmptyText;
   @Bind(R.id.swipe_to_refresh) SwipeRefreshLayout mSwipeRefresh;
   @Bind(R.id.toolbar) Toolbar toolbar;
 
-  private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+  private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
   private static final int URL_LOADER = 0;
   private ResortAdapter mResortAdapter;
 
@@ -90,8 +90,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
   }
 
   private void updateEmptyView() {
-    if ( mResortAdapter.getItemCount() == 0 ) {
-      if ( null != mEmptyText ) {
+    if (mResortAdapter.getItemCount() == 0) {
+      if (null != mEmptyText) {
         mEmptyText.setText(R.string.empty_resort_list);
       }
     }
